@@ -68,7 +68,7 @@ public class PetActivity extends FragmentActivity implements ActionBar.OnNavigat
 
     
 
-    @Override
+    //@Override
     public boolean onNavigationItemSelected(int position, long id) {
         // When the given tab is selected, show the tab contents in the container
         Fragment fragment = new DummySectionFragment();
