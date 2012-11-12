@@ -29,50 +29,132 @@ public class VirtualPetDatabaseHelper extends SQLiteOpenHelper {
 	private static final String TABLE_JOB = "Job";
 
 	// User Table Columns names
-	private static final String USER_ID = "id";
-	private static final String USER_NAME = "name";
-	private static final String USER_MONEY = "money";
+	private static final String USER_ID = "ID";
+	private static final String USER_NAME = "Name";
+	private static final String USER_MONEY = "Money";
 
 	// Pet Table Columns names
-	private static final String PET_ID = "id";
-	private static final String PET_NAME = "name";
-
+	private static final String PET_ID = "ID";
+	private static final String PET_NAME = "Name";
+	private static final String PET_AGE = "Age";
+	private static final String PET_AGE_INC = "AgeIncrement";
+	private static final String PET_WEIGHT = "Weight";
+	private static final String PET_HEALTH = "Health";
+	private static final String PET_HAPPINESS = "Happiness";
+	private static final String PET_HUNGER = "Hunger";
+	private static final String PET_SICKNESS = "Illness";
+	private static final String PET_MOOD = "Mood";
+	
 	// Illness Table Columns names
-
+	private static final String ILLNESS_NAME = "Name";
+	private static final String ILLNESS_HAIMPACT = "HappinessImpact";
+	private static final String ILLNESS_HEIMPACT = "HealthImpact";
+	private static final String ILLNESS_HUIMPACT = "HungerImpact";
+	private static final String ILLNESS_DESCRIPTION = "Description";
+	
 	// Mood Table Columns names
-
+	private static final String MOOD_TYPE = "Type";
+	private static final String MOOD_HAIMPACT = "HappinessImpact";
+	private static final String MOOD_DESCRIPTION = "Description";
+	
 	// RandEvent Table Columns names
-
+	private static final String REVENT_ID  = "ID";
+	private static final String REVENT_HAIMPACT = "HappinessImpact";
+	private static final String REVENT_HEIMPACT = "HealthImpact";
+	private static final String REVENT_HUIMPACT = "HungerImpact";
+	private static final String REVENT_ILLNESS = "Illness";
+	private static final String REVENT_ITEM = "Item";
+	private static final String REVENT_DESCRIPTION = "Description";
+	
 	// Event Table Columns names
-
+	private static final String EVENT_PET_ID = "PetID";
+	private static final String EVENT_RAND_ID = "RandID";
+	private static final String EVENT_TIME = "Time";
+	
 	// Interactions Table Columns names
-
+	private static final String INTERACTIONS_ID = "ID";
+	private static final String INTERACTIONS_HAIMPACT = "HappinessImpact";
+	private static final String INTERACTIONS_HEIMPACT = "HealthImpact";
+	private static final String INTERACTIONS_HUIMPACT = "HungerImpact";
+	
 	// Interaction Table Columns names
-
+	private static final String INTERACTION_PET_ID= "PetID";
+	private static final String INTERACTION_INT_ID = "IntID";
+	private static final String INTERACTION_TIME = "Time";
+	private static final String INTERACTION_POST_HAPPINESS= "PostHappiness";
+	private static final String INTERACTION_POST_HEALTH= "PostHealth";
+	
 	// Item Table Columns names
-
+	private static final String ITEM_ID = "ID";
+	private static final String ITEM_PRICE = "Price";
+	private static final String ITEM_DESCRIPTION = "Description";
+	
 	// Category Table Columns names
-
+	private static final String CATEGORY_ITEM_ID = "ItemID";
+	private static final String CATEGORY_TYPE= "Type";
+	private static final String CATEGORY_IMPACT= "Impact";
+	private static final String CATEGORY_ATTRIBUTE= "Attribute";
+	
 	// Owned Table Columns names
-
+	private static final String OWNED_PET_ID = "PetID";
+	private static final String OWNED_ITEM_ID = "ItemID";
+	private static final String OWNED_QUANTITY = "Quantity";
+	
 	// Job Table Columns names
-
+	private static final String JOB_ID = "ID";
+	private static final String JOB_EARNINGS = "Earnings";
+	private static final String JOB_TYPE = "Type";
+	private static final String JOB_DESCRIPTION = "Description";
+	
 	// create table queries here
 	private static final String CREATE_USER_TABLE = "CREATE TABLE "
 			+ TABLE_USER + "(" + USER_ID + " INTEGER PRIMARY KEY," + USER_NAME
 			+ " TEXT," + USER_MONEY + " INTEGER" + ")";
-	// to-do: create other tables here
-	private static final String CREATE_PET_TABLE = "";
-	private static final String CREATE_ILLNESS_TABLE = "";
-	private static final String CREATE_MOOD_TABLE = "";
-	private static final String CREATE_RANDEVENT_TABLE = "";
-	private static final String CREATE_EVENT_TABLE = "";
-	private static final String CREATE_INTERACTIONS_TABLE = "";
-	private static final String CREATE_INTERACTION_TABLE = "";
-	private static final String CREATE_ITEM_TABLE = "";
-	private static final String CREATE_CATEGORY_TABLE = "";
-	private static final String CREATE_OWNED_TABLE = "";
-	private static final String CREATE_JOB_TABLE = "";
+
+	private static final String CREATE_PET_TABLE = "CREATE TABLE " + TABLE_PET + "(" + PET_ID + "INTEGER PRIMARY KEY,"
+			+ PET_NAME + "TEXT, " + PET_AGE + "INTEGER, " + PET_AGE_INC + "INTEGER," + PET_WEIGHT + "DOUBLE," + PET_HAPPINESS + "INTEGER," 
+			+ PET_HEALTH + "INTEGER," + PET_HUNGER + "INTEGER," + PET_SICKNESS + "TEXT,"+ PET_MOOD + "TEXT)";
+
+	private static final String CREATE_ILLNESS_TABLE = "CREATE TABLE " + TABLE_ILLNESS + "(" + ILLNESS_NAME + "TEXT PRIMARY KEY," 
+			+ ILLNESS_HAIMPACT + "INTEGER, " + ILLNESS_HEIMPACT+ "INTEGER," + ILLNESS_HUIMPACT + "INTEGER, " +
+			+ ILLNESS_DESCRIPTION + "TEXT)";
+	
+	private static final String CREATE_MOOD_TABLE = "CREATE TABLE " + TABLE_MOOD + "(" + MOOD_TYPE + "TEXT PRIMARY KEY," + MOOD_HAIMPACT 
+			+ "INTEGER, " + MOOD_DESCRIPTION + "TEXT)";
+	
+	private static final String CREATE_RANDEVENT_TABLE = "CREATE TABLE" + TABLE_RANDEVENT + "(" + REVENT_ID + "INTEGER PRIMARY KEY,"
+			+ REVENT_HAIMPACT + "INTEGER," + REVENT_HEIMPACT + "INTEGER," + REVENT_HUIMPACT + "INTEGER,"
+			+ REVENT_ILLNESS + "TEXT," + REVENT_ITEM + "TEXT," + REVENT_DESCRIPTION + "TEXT)";
+	
+	private static final String CREATE_EVENT_TABLE = "CREATE TABLE " + TABLE_EVENT + "(" + EVENT_PET_ID + "INTEGER PRIMARY KEY, "
+			+ EVENT_RAND_ID + "INTEGER PRIMARY KEY, " + EVENT_TIME + "DATETIME, "
+			+ "FOREIGN KEY("+EVENT_PET_ID+") REFERENCES "+ TABLE_PET+"(" + PET_ID +"),"
+			+ "FOREIGN KEY("+ EVENT_RAND_ID +") REFERENCES "+ TABLE_RANDEVENT+"(" + REVENT_ID +"))";
+	
+	private static final String CREATE_INTERACTIONS_TABLE = "CREATE TABLE " + TABLE_INTERACTIONS + "(" + INTERACTIONS_ID + "INTEGER PRIMARY KEY,"
+			+ INTERACTIONS_HAIMPACT + "INTEGER," + INTERACTIONS_HEIMPACT + "INTEGER" + INTERACTIONS_HUIMPACT + "INTEGER)";
+	
+	private static final String CREATE_INTERACTION_TABLE = "CREATE TABLE " + TABLE_INTERACTION + "(" + INTERACTION_PET_ID 
+			+ "INTEGER PRIMARY KEY, " + INTERACTION_INT_ID + "INTEGER PRIMARY KEY, " + INTERACTION_TIME + "DATETIME," 
+			+ INTERACTION_POST_HAPPINESS + "INTEGER," + INTERACTION_POST_HEALTH + "INTEGER," 
+			+ "FOREIGN KEY("+INTERACTION_PET_ID+") REFERENCES "+ TABLE_PET+"(" + PET_ID+")," 
+			+ "FOREIGN KEY("+INTERACTION_INT_ID+") REFERENCES "+ TABLE_INTERACTIONS+"(" + INTERACTIONS_ID+"))";
+	
+	private static final String CREATE_ITEM_TABLE = "CREATE TABLE " + TABLE_ITEM + "("+ITEM_ID+"INTEGER PRIMARY KEY, "
+			+ ITEM_PRICE + "INTEGER," + ITEM DESCRIPTION + "TEXT)";
+	
+	private static final String CREATE_CATEGORY_TABLE = "CREATE TABLE " + TABLE_CATEGORY + "(" 
+			+ CATEGORY_ITEM_ID + "INTEGER PRIMARY KEY,"+ CATEGORY_TYPE + "TEXT PRIMARY KEY," 
+			+ CATEGORY_IMPACT +"INTEGER," + CATEGORY_ATTRIBUTE + "TEXT," 
+			+ "FOREIGN KEY("+CATEGORY_ITEM_ID+") REFERENCES "+ TABLE_ITEM+"(" + ITEM_ID+"))";
+	
+	private static final String CREATE_OWNED_TABLE = "CREATE TABLE " + TABLE_OWNED + "(" + OWNED_PET_ID 
+			+ "INTEGER PRIMARY KEY," + OWNED_ITEM_ID + "INTEGER PRIMARY KEY," + OWNED_QUANTITY + "INTEGER, "
+			+ "FOREIGN KEY("+OWNED_PET_ID+") REFERENCES "+ TABLE_PET+"(" + PET_ID+"))";
+	
+	private static final String CREATE_JOB_TABLE = "CREATE TABLE " + TABLE_JOB + "(" + JOB_ID 
+			+ "INTEGER PRIMARY KEY," + JOB_EARNINGS + "INTEGER," + JOB_TYPE + "TEXT, " 
+			+ JOB_DESCRIPTION + "TEXT)";
 
 	public VirtualPetDatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
