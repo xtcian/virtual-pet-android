@@ -1,5 +1,10 @@
-package edu.gatech.virtual_pet_app;
+package edu.gatech.virtual_pet_app.activity;
 
+import edu.gatech.virtual_pet_app.R;
+import edu.gatech.virtual_pet_app.R.id;
+import edu.gatech.virtual_pet_app.R.layout;
+import edu.gatech.virtual_pet_app.R.menu;
+import edu.gatech.virtual_pet_app.R.string;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
