@@ -52,13 +52,17 @@ public class Pet {
 	 * health goes down otherwise
 	 * @param medicine
 	 */
-	void takeMedicine(Item medicine){
+	void takeMedicine(Item medicine)
+	{
 		if(illness.equals(medicine.illnessImpact)){
-			illness=null;
+			illness.hasIllness = 0;
 			health+=medicine.healthImpact;
-		}else{
+		}
+		else
+		{
 			health-=medicine.healthImpact;
 		}
 	}
+	
 	
 }
