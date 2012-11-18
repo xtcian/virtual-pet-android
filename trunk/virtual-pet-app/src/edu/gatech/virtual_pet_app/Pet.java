@@ -8,7 +8,7 @@ public class Pet {
 	int weight;
 	int age;
 	int health, hunger, happiness;
-	Illness sickness;
+	Illness illness;
 	Mood mood;
 	
 	
@@ -21,12 +21,12 @@ public class Pet {
 	 * @param health
 	 * @param hunger
 	 * @param happiness
-	 * @param sickness
+	 * @param illness
 	 * @param mood
 	 * @param items
 	 */
 	Pet(String name, Breed breed, int weight, int age, int health, int hunger,
-			int happiness, Illness sickness, Mood mood, ArrayList<Item> items) {
+			int happiness, Illness illness, Mood mood, ArrayList<Item> items) {
 		this.name = name;
 		this.breed = breed;
 		this.weight=weight;
@@ -34,19 +34,11 @@ public class Pet {
 		this.health=health;
 		this.hunger=hunger;
 		this.happiness=happiness;
-		this.sickness=sickness;
+		this.illness=illness;
 		this.mood=mood;
 		this.items=items;
 	}
-	
-	/**
-	 * Pet buys an item, adds it to the item owning list
-	 * @param itemBought
-	 */
-	void buy(Item itemBought){
-		items.add(itemBought);
-	}
-	
+
 	void play(Item toyItem){
 		happiness+=toyItem.happinessImpact;
 	}
@@ -56,13 +48,13 @@ public class Pet {
 	}
 	
 	/**
-	 * If the pet takes the right medicine, sickness goes to null and health goes up
+	 * If the pet takes the right medicine, illness goes to null and health goes up
 	 * health goes down otherwise
 	 * @param medicine
 	 */
 	void takeMedicine(Item medicine){
-		if(sickness.equals(medicine.sicknessImpact)){
-			sickness=null;
+		if(illness.equals(medicine.illnessImpact)){
+			illness=null;
 			health+=medicine.healthImpact;
 		}else{
 			health-=medicine.healthImpact;
