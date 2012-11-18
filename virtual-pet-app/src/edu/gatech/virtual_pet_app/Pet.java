@@ -10,7 +10,8 @@ public class Pet {
 	int health, hunger, happiness;
 	Illness sickness;
 	Mood mood;
-	ArrayList<Item> items;
+	
+	
 	/**
 	 * Initialize the pet from data read in from database
 	 * @param name
