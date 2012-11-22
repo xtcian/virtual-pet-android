@@ -33,8 +33,8 @@ public class PetActivity extends FragmentActivity implements ActionBar.OnNavigat
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Set up the dropdown list navigation in the action bar.
         actionBar.setListNavigationCallbacks(
