@@ -7,16 +7,20 @@ public class Item {
 	int healthImpact;
 	int happinessImpact;
 	int hungerImpact;
-	Illness illness;
+	Illness illnessImpact;
+	Type type;
 	
-	public Item(int item_id, String description, int price, int health, int happy, int hunger, Illness sick){
+	public enum Type {FOOD,TOY,MEDICINE};
+	
+	public Item(int item_id, String description, int price, int health, int happy, int hunger, Illness sick, Type t){
 		this.item_id=item_id;
 		this.description=description;
 		this.price=price;
 		healthImpact=health;
 		happinessImpact=happy;
 		hungerImpact=hunger;
-		sicknessImpact=sick;
+		illnessImpact=sick;
+		type=t;
 	}
 	
 	public int getPrice()
@@ -37,9 +41,9 @@ public class Item {
 	{
 		return this.hungerImpact;
 	}
-	public Illness getIllness()
+	public Illness getIllnessImpact()
 	{
-		return this.illness;
+		return this.illnessImpact;
 	}
 	public String getDescription()
 	{

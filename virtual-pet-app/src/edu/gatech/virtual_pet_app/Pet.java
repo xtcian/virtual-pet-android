@@ -1,6 +1,5 @@
 package edu.gatech.virtual_pet_app;
 
-import java.util.ArrayList;
 
 public class Pet {
 	String name;
@@ -10,7 +9,15 @@ public class Pet {
 	int health, hunger, happiness;
 	Illness illness;
 	Mood mood;
+	Inventory inventory;
 	
+	/**
+	 * Mood impacts happiness and random event generations
+	 * Contains HAPPY SAD ANGRY CONTENT
+	 * @author Leshi
+	 *
+	 */
+	enum Mood{HAPPY, SAD, ANGRY, CONTENT};
 	
 	/**
 	 * Initialize the pet from data read in from database
@@ -26,7 +33,7 @@ public class Pet {
 	 * @param items
 	 */
 	Pet(String name, Breed breed, int weight, int age, int health, int hunger,
-			int happiness, Illness illness, Mood mood, ArrayList<Item> items) {
+			int happiness, Illness illness, Mood mood, Inventory inventory) {
 		this.name = name;
 		this.breed = breed;
 		this.weight=weight;
@@ -36,7 +43,7 @@ public class Pet {
 		this.happiness=happiness;
 		this.illness=illness;
 		this.mood=mood;
-		this.items=items;
+		this.inventory=inventory;
 	}
 
 	void play(Item toyItem){
@@ -55,7 +62,7 @@ public class Pet {
 	void takeMedicine(Item medicine)
 	{
 		if(illness.equals(medicine.illnessImpact)){
-			illness.hasIllness = 0;
+			this.illness=null;
 			health+=medicine.healthImpact;
 		}
 		else
