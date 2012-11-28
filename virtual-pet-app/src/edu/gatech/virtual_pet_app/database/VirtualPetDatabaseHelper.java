@@ -31,6 +31,7 @@ public class VirtualPetDatabaseHelper extends SQLiteOpenHelper {
 	// User Table Columns names
 	private static final String USER_ID = "ID";
 	private static final String USER_NAME = "Name";
+	private static final String USER_PASSWORD = "Password";
 	private static final String USER_MONEY = "Money";
 
 	// Pet Table Columns names
@@ -83,6 +84,7 @@ public class VirtualPetDatabaseHelper extends SQLiteOpenHelper {
 	private static final String INTERACTION_TIME = "Time";
 	private static final String INTERACTION_POST_HAPPINESS= "PostHappiness";
 	private static final String INTERACTION_POST_HEALTH= "PostHealth";
+	private static final String INTERACTION_POST_HUNGER= "PostHunger";
 	
 	// Item Table Columns names
 	private static final String ITEM_ID = "ID";
@@ -96,7 +98,7 @@ public class VirtualPetDatabaseHelper extends SQLiteOpenHelper {
 	private static final String CATEGORY_ATTRIBUTE= "Attribute";
 	
 	// Owned Table Columns names
-	private static final String OWNED_PET_ID = "PetID";
+	private static final String OWNED_USER_ID = "UserID";
 	private static final String OWNED_ITEM_ID = "ItemID";
 	private static final String OWNED_QUANTITY = "Quantity";
 	
@@ -109,7 +111,7 @@ public class VirtualPetDatabaseHelper extends SQLiteOpenHelper {
 	// create table queries here
 	private static final String CREATE_USER_TABLE = "CREATE TABLE "
 			+ TABLE_USER + "(" + USER_ID + " INTEGER PRIMARY KEY," + USER_NAME
-			+ " TEXT," + USER_MONEY + " INTEGER" + ")";
+			+ " TEXT,"  + USER_PASSWORD	+ " TEXT," + USER_MONEY + " INTEGER" + ")";
 
 	private static final String CREATE_PET_TABLE = "CREATE TABLE " + TABLE_PET + "(" + PET_ID + " INTEGER PRIMARY KEY,"
 			+ PET_NAME + " TEXT, " + PET_AGE + " INTEGER, " + PET_AGE_INC + " INTEGER," + PET_WEIGHT + " DOUBLE," + PET_HAPPINESS + " INTEGER," 
@@ -136,7 +138,7 @@ public class VirtualPetDatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String CREATE_INTERACTION_TABLE = "CREATE TABLE " + TABLE_INTERACTION + "(" + INTERACTION_PET_ID 
 			+ " INTEGER PRIMARY KEY, " + INTERACTION_INT_ID + " INTEGER PRIMARY KEY, " + INTERACTION_TIME + " DATETIME," 
-			+ INTERACTION_POST_HAPPINESS + " INTEGER," + INTERACTION_POST_HEALTH + " INTEGER," 
+			+ INTERACTION_POST_HAPPINESS + " INTEGER," + INTERACTION_POST_HEALTH + " INTEGER,"  + INTERACTION_POST_HUNGER + " INTEGER," 
 			+ "FOREIGN KEY("+INTERACTION_PET_ID+") REFERENCES "+ TABLE_PET+"(" + PET_ID+")," 
 			+ "FOREIGN KEY("+INTERACTION_INT_ID+") REFERENCES "+ TABLE_INTERACTIONS+"(" + INTERACTIONS_ID+"))";
 	
@@ -148,9 +150,9 @@ public class VirtualPetDatabaseHelper extends SQLiteOpenHelper {
 			+ CATEGORY_IMPACT +" INTEGER," + CATEGORY_ATTRIBUTE + " TEXT," 
 			+ "FOREIGN KEY("+CATEGORY_ITEM_ID+") REFERENCES "+ TABLE_ITEM+"(" + ITEM_ID+"))";
 	
-	private static final String CREATE_OWNED_TABLE = "CREATE TABLE " + TABLE_OWNED + "(" + OWNED_PET_ID 
+	private static final String CREATE_OWNED_TABLE = "CREATE TABLE " + TABLE_OWNED + "(" + OWNED_USER_ID 
 			+ " INTEGER PRIMARY KEY," + OWNED_ITEM_ID + " INTEGER PRIMARY KEY," + OWNED_QUANTITY + " INTEGER, "
-			+ "FOREIGN KEY("+OWNED_PET_ID+") REFERENCES "+ TABLE_PET+"(" + PET_ID+"))";
+			+ "FOREIGN KEY("+ OWNED_USER_ID +") REFERENCES "+ TABLE_PET+"(" + USER_ID+"))";
 	
 	private static final String CREATE_JOB_TABLE = "CREATE TABLE " + TABLE_JOB + "(" + JOB_ID 
 			+ " INTEGER PRIMARY KEY," + JOB_EARNINGS + " INTEGER," + JOB_TYPE + " TEXT, " 
@@ -203,3 +205,6 @@ public class VirtualPetDatabaseHelper extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 }
+
+
+

@@ -1,15 +1,13 @@
+
 package edu.gatech.virtual_pet_app;
 
-
 public class Pet {
-	String name;
-	Breed breed;
-	int weight;
-	int age;
-	int health, hunger, happiness;
-	Illness illness;
-	Mood mood;
-	Inventory inventory;
+	private String name;
+	private int weight;
+	private int age;
+	private int health, hunger, happiness;
+	private Illness illness;
+	private Mood mood;
 	
 	/**
 	 * Mood impacts happiness and random event generations
@@ -32,10 +30,9 @@ public class Pet {
 	 * @param mood
 	 * @param items
 	 */
-	Pet(String name, Breed breed, int weight, int age, int health, int hunger,
-			int happiness, Illness illness, Mood mood, Inventory inventory) {
+	public Pet(String name, int weight, int age, int health, int hunger,
+			int happiness, Illness illness, Mood mood) {
 		this.name = name;
-		this.breed = breed;
 		this.weight=weight;
 		this.age=age;
 		this.health=health;
@@ -43,15 +40,33 @@ public class Pet {
 		this.happiness=happiness;
 		this.illness=illness;
 		this.mood=mood;
-		this.inventory=inventory;
 	}
-
+	public Pet(String name)
+	{
+		this.name = name;
+		weight = 10;
+		age = 0;
+		health = 100;
+		hunger = 50;
+		happiness = 100;
+		illness = null;
+		mood = Mood.HAPPY;
+	}
 	void play(Item toyItem){
-		happiness+=toyItem.happinessImpact;
+		happiness+=toyItem.getHappinessImpact();
 	}
 	
-	void eat(Item foodItem){
-		hunger+=foodItem.hungerImpact;
+	public String eat(Item foodItem)
+	{
+		if(hunger < 100)
+		{
+			hunger= hunger + foodItem.getHungerImpact();
+			if(hunger > 100)
+				hunger = 100;
+			return "Your pet has been fed";
+		}
+		return "Your pet is full and can't possibly eat anymore";
+		
 	}
 	
 	/**
@@ -61,15 +76,79 @@ public class Pet {
 	 */
 	void takeMedicine(Item medicine)
 	{
-		if(illness.equals(medicine.illnessImpact)){
+		if(illness.equals(medicine.getIllnessImpact())){
 			this.illness=null;
-			health+=medicine.healthImpact;
+			health+=medicine.getHealthImpact();
 		}
 		else
 		{
-			health-=medicine.healthImpact;
+			health-=medicine.getHealthImpact();
 		}
 	}
 	
+	public String getName()
+	{
+		return this.name;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
+	public int getHunger() {
+		return hunger;
+	}
+
+	public void setHunger(int hunger) {
+		this.hunger = hunger;
+	}
+
+	public int getHappiness() {
+		return happiness;
+	}
+
+	public void setHappiness(int happiness) {
+		this.happiness = happiness;
+	}
+
+	public Illness getIllness() {
+		return illness;
+	}
+
+	public void setIllness(Illness illness) {
+		this.illness = illness;
+	}
+
+	public Mood getMood() {
+		return mood;
+	}
+
+	public void setMood(Mood mood) {
+		this.mood = mood;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 }
