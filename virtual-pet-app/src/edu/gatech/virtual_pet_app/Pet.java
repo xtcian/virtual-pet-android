@@ -104,6 +104,31 @@ public class Pet {
 			health-=medicine.getHealthImpact();
 		}
 	}
+	public void applyIllnessEffects()
+	{
+		if(illness != null)
+		{
+			health = health - illness.getHealthImpact();
+			happiness = happiness - illness.getHealthImpact();
+		}
+		if(health <= 0)
+		{
+			death();
+		}
+		if(happiness <= 0)
+		{
+			runaway();
+		}
+	}
+	
+	public void death()
+	{
+		
+	}
+	public void runaway()
+	{
+		
+	}
 	
 	public String getName()
 	{

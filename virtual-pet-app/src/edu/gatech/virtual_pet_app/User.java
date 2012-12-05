@@ -57,13 +57,20 @@ public class User {
 	//it time isn't happening, just fill "time" with 0
 	public String work(Pet pet, int time, int earnings)
 	{
-		if(pet.getHappiness() > 10){
-			money = money + (earnings*time);
-			pet.setHappiness(pet.getHappiness() - ((earnings*time)/2));
-			pet.setAvailable(false);
-			pet.setExpiration((System.currentTimeMillis()/1000/60) + time);
+		if(pet.getHappiness() > 20){
 			
-			return "Your pet has worked for " + time + "minutes, earning " + earnings*time + "monies";
+			if(pet.getHappiness()-((earnings*time)/2) <= 0 )
+			{
+				return "Your pet is not happy enough to work for that amount of time";
+			}
+			else
+			{
+				money = money + (earnings*time);
+				pet.setHappiness(pet.getHappiness() - ((earnings*time)/2));
+				pet.setAvailable(false);
+				pet.setExpiration((System.currentTimeMillis()/1000/60) + time);
+			}
+			return "Your pet will work for " + time + "minutes, earning " + earnings*time + "monies";
 		}
 		return "Your pet is too unhappy to work";
 
