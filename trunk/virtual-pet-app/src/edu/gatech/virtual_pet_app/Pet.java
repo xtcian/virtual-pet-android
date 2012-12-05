@@ -47,7 +47,7 @@ public class Pet {
 		this.ageinc = ageinc;
 		this.expiration = 0;
 	}
-	public Pet(String name, PDSource db)
+	public Pet(String name)
 	{
 		this.name = name;
 		weight = 10;
