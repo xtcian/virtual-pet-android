@@ -42,5 +42,62 @@ public class PDSource
 		dbHelper.close();
 	}
 	
+	//---------------------------------------------------------------
+	public int addPet()
+	{
+		ContentValues values = new ContentValues();
+		values.put();
+		
+		return 0;
+	}
+	
+	public void feedEvent(int post)
+	{
+	//	db.execSQL("INSERT INTO Interaction VALUES("");
+	}
+	public void playEvent(int post)
+	{
+		//insert interaction
+	}
+	public void pushPet(Pet pet)
+	{
+		
+	}
+	public void pushUser()
+	{
+		
+	}
+	public void pushOwned()
+	{
+		//add the bought items
+	}
+	public void getItems()
+	{
+		
+	}
+	public void calculateMood(Pet pet)
+	{
+		//grab interactions and determine how "well cared for" the pet is. feeding/playing
+	}
+	public void calculateHunger(Pet pet)
+	{
+		
+	}
+	public void changeWeight(Pet pet)
+	{
+		//analyze history of feedinig. determine if commonly under or overfed. add weight accordingly
+	}
+	public void getRandomEvent()
+	{
+		
+	}
+	public void getJobs(Pet pet)
+	{
+		//where type = pet.getType
+	}
+	public void removePet(Pet pet)
+	{
+		
+	}
 	
 }
