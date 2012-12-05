@@ -251,6 +251,10 @@ public class VirtualPetDatabaseHelper{ //extends SQLiteOpenHelper {
 	{
 		//where type = pet.getType
 	}
+	public void removePet(Pet pet)
+	{
+		
+	}
 }
 
 
