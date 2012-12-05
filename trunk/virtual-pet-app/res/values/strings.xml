@@ -1,11 +1,12 @@
 <resources>
 
-    <string name="app_name">Your Virtual Pet</string>
-    <string name="title_section3">General</string>
-    <string name="title_section2">Work</string>
-    <string name="title_section1">Store</string>
+    <string name="app_name">Virtual_Pet</string>
+    <string name="title_section3">Work</string>
+    <string name="title_section2">Store</string>
+    <string name="title_section1">Pet</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Hi!</string>
-    <string name="title_activity_pet">PetActivity</string>
+    <string name="title_activity_pet">Your Pet</string>
+    <string name="buy_item">Purchase</string>
 
 </resources>
