@@ -15,11 +15,11 @@ public class Pet {
 	
 	/**
 	 * Mood impacts happiness and random event generations
-	 * Contains HAPPY SAD ANGRY CONTENT
+	 * Contains 
 	 * @author Leshi
 	 *
 	 */
-	enum Mood{HAPPY, SAD, ANGRY, CONTENT};
+	enum Mood{FRIENDLY, AGRESSIVE, DEPRESSED, CONTENT};
 	
 	/**
 	 * Initialize the pet from data read in from database
@@ -59,7 +59,7 @@ public class Pet {
 		hunger = 50;
 		happiness = 100;
 		illness = null;
-		mood = Mood.HAPPY;
+		mood = Mood.FRIENDLY;
 		this.db = db;
 		this.available = false;
 		this.expiration = 0;
