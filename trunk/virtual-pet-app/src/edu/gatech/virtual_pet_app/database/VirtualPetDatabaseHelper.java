@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class VirtualPetDatabaseHelper extends SQLiteOpenHelper {
+public class VirtualPetDatabaseHelper{ //extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
@@ -203,6 +203,53 @@ public class VirtualPetDatabaseHelper extends SQLiteOpenHelper {
 
 		// Create tables again
 		onCreate(db);
+	}
+	public int addPet(String name, int age, int ageinc, int weight, int health, int happiness, int hunger, Illness illness, Pet.Mood mood)
+	{
+		
+	//	return id;
+		return 0;
+	}
+	
+	public void feedEvent(int post)
+	{
+	//	db.execSQL("INSERT INTO Interaction VALUES("");
+	}
+	public void playEvent(int post)
+	{
+		//insert interaction
+	}
+	public void pushPet(Pet pet)
+	{
+		
+	}
+	public void pushOwned()
+	{
+		//add the bought items
+	}
+	public void getItems()
+	{
+		
+	}
+	public void calculateMood(Pet pet)
+	{
+		//grab interactions and determine how "well cared for" the pet is. feeding/playing
+	}
+	public void calculateHunger(Pet pet)
+	{
+		
+	}
+	public void changeWeight(Pet pet)
+	{
+		//analyze history of feedinig. determine if commonly under or overfed. add weight accordingly
+	}
+	public void getRandomEvent()
+	{
+		
+	}
+	public void getJobs(Pet pet)
+	{
+		//where type = pet.getType
 	}
 }
 
