@@ -49,6 +49,11 @@ public class PDSource
 		
 		return 0;
 	}
+	public void removePet(Pet pet)
+	{
+		long id = pet.getId();
+		database.delete(VPDHelper.TABLE_PET, VPDHelper.PET_ID + "=" + id, null);
+	}
 	
 	public void feedEvent(int post)
 	{
@@ -135,11 +140,6 @@ public class PDSource
 		
 		return jobs;
 		
-	}
-	public void removePet(Pet pet)
-	{
-		long id = pet.getId();
-		database.delete(VPDHelper.TABLE_PET, VPDHelper.PET_ID + "=" + id, null);
 	}
 	
 }
