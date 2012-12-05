@@ -17,4 +17,41 @@ public class REvent
 		this.illness = illness;
 		this.description = description;
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getHappiness() {
+		return happiness;
+	}
+	public void setHappiness(int happiness) {
+		this.happiness = happiness;
+	}
+	public int getHealth() {
+		return health;
+	}
+	public void setHealth(int health) {
+		this.health = health;
+	}
+	public int getHunger() {
+		return hunger;
+	}
+	public void setHunger(int hunger) {
+		this.hunger = hunger;
+	}
+	public String getIllness() {
+		return illness;
+	}
+	public void setIllness(String illness) {
+		this.illness = illness;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 }
