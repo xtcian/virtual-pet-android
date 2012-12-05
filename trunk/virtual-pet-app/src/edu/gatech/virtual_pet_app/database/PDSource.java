@@ -24,8 +24,7 @@ public class PDSource
 	private String[] interactionCollumns = {VPDHelper.INTERACTION_PET_ID, VPDHelper.INTERACTION_INT_ID, VPDHelper.INTERACTION_TIME, VPDHelper.INTERACTION_POST_HAPPINESS, VPDHelper.INTERACTION_POST_HEALTH, VPDHelper.INTERACTION_POST_HUNGER};
 	private String[] jobCollumns = {VPDHelper.JOB_ID, VPDHelper.JOB_EARNINGS, VPDHelper.JOB_TYPE, VPDHelper.JOB_DESCRIPTION};
 	private String[] ownedCollumns = {VPDHelper.OWNED_USER_ID, VPDHelper.OWNED_ITEM_ID, VPDHelper.OWNED_QUANTITY};
-	private String[] categoryCollumns = {VPDHelper.CATEGORY_ITEM_ID, VPDHelper.CATEGORY_TYPE, VPDHelper.CATEGORY_IMPACT, VPDHelper.CATEGORY_ATTRIBUTE};
-	private String[] itemCollumns ={VPDHelper.ITEM_ID, VPDHelper.ITEM_PRICE, VPDHelper.ITEM_DESCRIPTION};
+	private String[] itemCollumns ={VPDHelper.ITEM_ID, VPDHelper.ITEM_PRICE, VPDHelper.ITEM_DESCRIPTION, VPDHelper.ITEM_TYPE, VPDHelper.ITEM_IMPACT, VPDHelper.ITEM_ATTRIBUTE};
 	
 	public PDSource(Context context)
 	{
@@ -71,9 +70,32 @@ public class PDSource
 	{
 		//add the bought items
 	}
-	public void getItems()
+	public void updateOwned(Item item, int newQuantity)
 	{
 		
+	}
+	public List<Item> getItems()
+	{
+		List<Item> items = new ArrayList<Item>();
+		
+		Cursor cursor = database.query(VPDHelper.TABLE_ITEM, itemCollumns, null, null, null, null, null);
+		
+		cursor.moveToFirst();
+		while(!cursor.isAfterLast())
+		{
+			Item item = new Item();
+			item.setItem_id(cursor.getInt(0));
+			item.setPrice(cursor.getInt(1));
+			item.setDescription(cursor.getString(2));
+			item.setType(Item.Type.valueOf(cursor.getString(3)));
+			item.setImpact(cursor.getInt(4));
+			item.setIllnessImpact(cursor.getString(5));
+			items.add(item);
+			cursor.moveToNext();
+		}
+		
+		return items;
+	
 	}
 	public void calculateMood(Pet pet)
 	{
@@ -91,13 +113,33 @@ public class PDSource
 	{
 		
 	}
-	public void getJobs(Pet pet)
-	{
-		//where type = pet.getType
+	public List<Job> getJobs(Pet pet)
+	{ 
+		List<Item> jobs = new ArrayList<Item>();
+		
+		Cursor cursor = database.query(VPDHelper.TABLE_JOB, jobCollumns, null, null, null, null, null);
+		
+		cursor.moveToFirst();
+		while(!cursor.isAfterLast())
+		{
+			Job job = new Job();
+			job.setJob_id(cursor.getInt(0));
+			job.setPrice(cursor.getInt(1));
+			item.setDescription(cursor.getString(2));
+			item.setType(Item.Type.valueOf(cursor.getString(3)));
+			item.setImpact(cursor.getInt(4));
+			item.setIllnessImpact(cursor.getString(5));
+			items.add(item);
+			cursor.moveToNext();
+		}
+		
+		return jobs;
+		
 	}
 	public void removePet(Pet pet)
 	{
-		
+		long id = pet.getId();
+		database.delete(VPDHelper.TABLE_PET, VPDHelper.PET_ID + "=" + id, null);
 	}
 	
 }
