@@ -5,9 +5,13 @@ public class Pet {
 	private String name;
 	private int weight;
 	private int age;
-	private int health, hunger, happiness;
+	private int ageinc;
+	private int health, hunger, happiness, id;
 	private Illness illness;
+	private boolean available;
+	private long expiration;
 	private Mood mood;
+	private VirtualPetDatabaseHelper db;
 	
 	/**
 	 * Mood impacts happiness and random event generations
@@ -30,8 +34,8 @@ public class Pet {
 	 * @param mood
 	 * @param items
 	 */
-	public Pet(String name, int weight, int age, int health, int hunger,
-			int happiness, Illness illness, Mood mood) {
+	public Pet(String name, int weight, int age, int ageinc, int health, int hunger,
+			int happiness, Illness illness, Mood mood,VirtualPetDatabaseHelper db ) {
 		this.name = name;
 		this.weight=weight;
 		this.age=age;
@@ -40,8 +44,13 @@ public class Pet {
 		this.happiness=happiness;
 		this.illness=illness;
 		this.mood=mood;
+		this.db = db;
+		this.available = true;
+		this.ageinc = ageinc;
+		this.expiration = 0;
+		this.id = db.addPet(name, age, ageinc, weight, health, happiness, hunger, illness, mood);
 	}
-	public Pet(String name)
+	public Pet(String name, VirtualPetDatabaseHelper db)
 	{
 		this.name = name;
 		weight = 10;
@@ -51,18 +60,28 @@ public class Pet {
 		happiness = 100;
 		illness = null;
 		mood = Mood.HAPPY;
+		this.db = db;
+		this.available = false;
+		this.expiration = 0;
+		this.id = db.addPet(name, age, ageinc, weight, health, happiness, hunger, illness, mood);
 	}
-	void play(Item toyItem){
-		happiness+=toyItem.getHappinessImpact();
+	public void play(Item toyItem)
+	{
+		if(happiness < 100)
+			happiness+=toyItem.getHappinessImpact();
+		if(happiness > 100)
+			happiness = 100;
+		db.playEvent(happiness);
 	}
 	
 	public String eat(Item foodItem)
 	{
 		if(hunger < 100)
 		{
-			hunger= hunger + foodItem.getHungerImpact();
+			hunger = hunger + foodItem.getHungerImpact();
 			if(hunger > 100)
 				hunger = 100;
+			db.feedEvent(happiness);
 			return "Your pet has been fed";
 		}
 		return "Your pet is full and can't possibly eat anymore";
@@ -90,65 +109,84 @@ public class Pet {
 	{
 		return this.name;
 	}
-
 	public int getWeight() {
 		return weight;
 	}
-
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
-
 	public int getAge() {
 		return age;
 	}
-
 	public void setAge(int age) {
 		this.age = age;
 	}
-
 	public int getHealth() {
 		return health;
 	}
-
 	public void setHealth(int health) {
 		this.health = health;
 	}
-
 	public int getHunger() {
 		return hunger;
 	}
-
 	public void setHunger(int hunger) {
 		this.hunger = hunger;
 	}
-
 	public int getHappiness() {
 		return happiness;
 	}
-
 	public void setHappiness(int happiness) {
-		this.happiness = happiness;
+		if(happiness > 100)
+		{
+			this.happiness = 100;
+		}
+		else if(happiness < 0)
+		{
+			this.happiness = 0;
+		}
+		else
+		{
+			this.happiness = happiness;
+		}
+		
 	}
-
 	public Illness getIllness() {
 		return illness;
 	}
-
 	public void setIllness(Illness illness) {
 		this.illness = illness;
 	}
-
 	public Mood getMood() {
 		return mood;
 	}
-
 	public void setMood(Mood mood) {
 		this.mood = mood;
 	}
-
 	public void setName(String name) {
+
 		this.name = name;
 	}
+	public boolean isAvailable() {
+		
+		if((System.currentTimeMillis()/1000/60) > expiration)
+		{
+			expiration = 0;
+			available = true;
+		}
+		
+		return available;
+	}
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
+	public long getTimeAvailable() {
+		return expiration;
+	}
+	public void setExpiration(long expiration) {
+		this.expiration = expiration;
+	}
+	
+	
 	
 }
