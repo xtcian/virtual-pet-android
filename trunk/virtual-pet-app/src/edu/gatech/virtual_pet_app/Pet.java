@@ -123,11 +123,11 @@ public class Pet {
 	
 	public void death()
 	{
-		
+		db.removePet(this);
 	}
 	public void runaway()
 	{
-		
+		db.removePet(this);
 	}
 	
 	public String getName()
