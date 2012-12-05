@@ -21,7 +21,6 @@ public class VPDHelper{ //extends SQLiteOpenHelper {
 	public static final String TABLE_MOOD = "Mood";
 	public static final String TABLE_RANDEVENT = "RandEvent";
 	public static final String TABLE_EVENT = "Event";
-	public static final String TABLE_INTERACTIONS = "Interactions";
 	public static final String TABLE_INTERACTION = "Interaction";
 	public static final String TABLE_ITEM = "Item";
 	public static final String TABLE_CATEGORY = "Category";
@@ -72,15 +71,9 @@ public class VPDHelper{ //extends SQLiteOpenHelper {
 	public static final String EVENT_RAND_ID = "RandID";
 	public static final String EVENT_TIME = "Time";
 	
-	// Interactions Table Columns names
-	public static final String INTERACTIONS_ID = "ID";
-	public static final String INTERACTIONS_HAIMPACT = "HappinessImpact";
-	public static final String INTERACTIONS_HEIMPACT = "HealthImpact";
-	public static final String INTERACTIONS_HUIMPACT = "HungerImpact";
 	
 	// Interaction Table Columns names
 	public static final String INTERACTION_PET_ID= "PetID";
-	public static final String INTERACTION_INT_ID = "IntID";
 	public static final String INTERACTION_TIME = "Time";
 	public static final String INTERACTION_POST_HAPPINESS= "PostHappiness";
 	public static final String INTERACTION_POST_HEALTH= "PostHealth";
@@ -130,14 +123,10 @@ public class VPDHelper{ //extends SQLiteOpenHelper {
 			+ "FOREIGN KEY("+EVENT_PET_ID+") REFERENCES "+ TABLE_PET+"(" + PET_ID +"), "
 			+ "FOREIGN KEY("+ EVENT_RAND_ID +") REFERENCES "+ TABLE_RANDEVENT+"(" + REVENT_ID +"))";
 	
-	public static final String CREATE_INTERACTIONS_TABLE = "CREATE TABLE " + TABLE_INTERACTIONS + "(" + INTERACTIONS_ID + " INTEGER PRIMARY KEY,"
-			+ INTERACTIONS_HAIMPACT + " INTEGER," + INTERACTIONS_HEIMPACT + " INTEGER" + INTERACTIONS_HUIMPACT + " INTEGER)";
-	
 	public static final String CREATE_INTERACTION_TABLE = "CREATE TABLE " + TABLE_INTERACTION + "(" + INTERACTION_PET_ID 
-			+ " INTEGER PRIMARY KEY, " + INTERACTION_INT_ID + " INTEGER PRIMARY KEY, " + INTERACTION_TIME + " DATETIME," 
+			+ " INTEGER PRIMARY KEY, " + INTERACTION_TIME + " DATETIME," 
 			+ INTERACTION_POST_HAPPINESS + " INTEGER," + INTERACTION_POST_HEALTH + " INTEGER,"  + INTERACTION_POST_HUNGER + " INTEGER," 
-			+ "FOREIGN KEY("+INTERACTION_PET_ID+") REFERENCES "+ TABLE_PET+"(" + PET_ID+")," 
-			+ "FOREIGN KEY("+INTERACTION_INT_ID+") REFERENCES "+ TABLE_INTERACTIONS+"(" + INTERACTIONS_ID+"))";
+			+ "FOREIGN KEY("+INTERACTION_PET_ID+") REFERENCES "+ TABLE_PET+"(" + PET_ID+"))";
 	
 	public static final String CREATE_ITEM_TABLE = "CREATE TABLE " + TABLE_ITEM + "("+ITEM_ID+" INTEGER PRIMARY KEY, "
 			+ ITEM_PRICE + " INTEGER," + ITEM_DESCRIPTION + " TEXT, " + ITEM_TYPE + "String, " + ITEM_IMPACT + " INTEGER, " + ITEM_ATTRIBUTE + "TEXT )";
@@ -150,7 +139,7 @@ public class VPDHelper{ //extends SQLiteOpenHelper {
 			+ " INTEGER PRIMARY KEY," + JOB_EARNINGS + " INTEGER," + JOB_TYPE + " TEXT, " 
 			+ JOB_DESCRIPTION + " TEXT)";
 
-	public VirtualPetDatabaseHelper(Context context) {
+	public VPDHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
@@ -164,10 +153,8 @@ public class VPDHelper{ //extends SQLiteOpenHelper {
 		db.execSQL(CREATE_MOOD_TABLE);
 		db.execSQL(CREATE_RANDEVENT_TABLE);
 		db.execSQL(CREATE_EVENT_TABLE);
-		db.execSQL(CREATE_INTERACTIONS_TABLE);
 		db.execSQL(CREATE_INTERACTION_TABLE);
 		db.execSQL(CREATE_ITEM_TABLE);
-		db.execSQL(CREATE_CATEGORY_TABLE);
 		db.execSQL(CREATE_OWNED_TABLE);
 		db.execSQL(CREATE_JOB_TABLE);
 		
@@ -176,7 +163,7 @@ public class VPDHelper{ //extends SQLiteOpenHelper {
 	// Upgrading database, this happens when you change the version number
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.w(VirtualPetDatabaseHelper.class.getName(),
+		Log.w(VPDHelper.class.getName(),
 		        "Upgrading database from version " + oldVersion + " to "
 		            + newVersion + ", which will destroy all old data");
 		// Drop older table if existed
@@ -186,7 +173,6 @@ public class VPDHelper{ //extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOOD);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_RANDEVENT);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENT);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_INTERACTIONS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_INTERACTION);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEM);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
