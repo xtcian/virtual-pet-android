@@ -11,7 +11,6 @@ public class Pet {
 	private boolean available;
 	private long expiration;
 	private Mood mood;
-	private VirtualPetDatabaseHelper db;
 	
 	/**
 	 * Mood impacts happiness and random event generations
@@ -35,7 +34,7 @@ public class Pet {
 	 * @param items
 	 */
 	public Pet(String name, int weight, int age, int ageinc, int health, int hunger,
-			int happiness, Illness illness, Mood mood,VirtualPetDatabaseHelper db ) {
+			int happiness, Illness illness, Mood mood) {
 		this.name = name;
 		this.weight=weight;
 		this.age=age;
@@ -44,13 +43,11 @@ public class Pet {
 		this.happiness=happiness;
 		this.illness=illness;
 		this.mood=mood;
-		this.db = db;
 		this.available = true;
 		this.ageinc = ageinc;
 		this.expiration = 0;
-		this.id = db.addPet(name, age, ageinc, weight, health, happiness, hunger, illness, mood);
 	}
-	public Pet(String name, VirtualPetDatabaseHelper db)
+	public Pet(String name, PDSource db)
 	{
 		this.name = name;
 		weight = 10;
@@ -60,28 +57,24 @@ public class Pet {
 		happiness = 100;
 		illness = null;
 		mood = Mood.FRIENDLY;
-		this.db = db;
 		this.available = false;
 		this.expiration = 0;
-		this.id = db.addPet(name, age, ageinc, weight, health, happiness, hunger, illness, mood);
 	}
 	public void play(Item toyItem)
 	{
 		if(happiness < 100)
-			happiness+=toyItem.getHappinessImpact();
+			happiness+=toyItem.getImpact();
 		if(happiness > 100)
 			happiness = 100;
-		db.playEvent(happiness);
 	}
 	
 	public String eat(Item foodItem)
 	{
 		if(hunger < 100)
 		{
-			hunger = hunger + foodItem.getHungerImpact();
+			hunger = hunger + foodItem.getImpact();
 			if(hunger > 100)
 				hunger = 100;
-			db.feedEvent(happiness);
 			return "Your pet has been fed";
 		}
 		return "Your pet is full and can't possibly eat anymore";
@@ -97,14 +90,14 @@ public class Pet {
 	{
 		if(illness.equals(medicine.getIllnessImpact())){
 			this.illness=null;
-			health+=medicine.getHealthImpact();
+			health+=medicine.getImpact();
 		}
 		else
 		{
-			health-=medicine.getHealthImpact();
+			health-=medicine.getImpact();
 		}
 	}
-	public void applyIllnessEffects()
+	public boolean applyIllnessEffects()
 	{
 		if(illness != null)
 		{
@@ -113,22 +106,15 @@ public class Pet {
 		}
 		if(health <= 0)
 		{
-			death();
+			return false;
 		}
 		if(happiness <= 0)
 		{
-			runaway();
+			return false;
 		}
+		return true;
 	}
 	
-	public void death()
-	{
-		db.removePet(this);
-	}
-	public void runaway()
-	{
-		db.removePet(this);
-	}
 	
 	public String getName()
 	{
@@ -210,6 +196,21 @@ public class Pet {
 	}
 	public void setExpiration(long expiration) {
 		this.expiration = expiration;
+	}
+	public int getAgeinc() {
+		return ageinc;
+	}
+	public void setAgeinc(int ageinc) {
+		this.ageinc = ageinc;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public long getExpiration() {
+		return expiration;
 	}
 	
 	
