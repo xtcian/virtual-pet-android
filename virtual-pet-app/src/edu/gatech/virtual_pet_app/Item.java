@@ -24,7 +24,10 @@ public class Item {
 		type=t;
 		this.quantity = quantity;
 	}
-	
+	public Item()
+	{
+		
+	}
 	public int getPrice()
 	{
 		return this.price;
