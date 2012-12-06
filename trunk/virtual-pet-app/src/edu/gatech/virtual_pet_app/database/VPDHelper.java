@@ -7,6 +7,7 @@ import android.util.Log;
 
 public class VPDHelper extends SQLiteOpenHelper {
 
+
 	// All Static variables
 	// Database Version
 	public static final int DATABASE_VERSION = 1;
@@ -117,9 +118,9 @@ public class VPDHelper extends SQLiteOpenHelper {
 			+ REVENT_HAIMPACT + " INTEGER," + REVENT_HEIMPACT + " INTEGER," + REVENT_HUIMPACT + " INTEGER,"
 			+ REVENT_ILLNESS + " TEXT," + REVENT_ITEM + " TEXT," + REVENT_DESCRIPTION + " TEXT)";
 	
-	public static final String CREATE_EVENT_TABLE = "CREATE TABLE " + TABLE_EVENT + "(" + EVENT_PET_ID + " INTEGER PRIMARY KEY, "
-			+ EVENT_RAND_ID + " INTEGER PRIMARY KEY, " + EVENT_TIME + " DATETIME, "
-			+ "FOREIGN KEY("+EVENT_PET_ID+") REFERENCES "+ TABLE_PET+"(" + PET_ID +"), "
+	public static final String CREATE_EVENT_TABLE = "CREATE TABLE " + TABLE_EVENT + "(" + EVENT_PET_ID + " INTEGER, "
+			+ EVENT_RAND_ID + " INTEGER, " + EVENT_TIME + " DATETIME, PRIMARY KEY(" EVENT_PET_ID +" , " + EVENT_RAND_ID  + " )"
+			+ "FOREIGN KEY("+EVENT_PET_ID+") REFERENCES "+ TABLE_PET+"(" + PET_ID +"),  "
 			+ "FOREIGN KEY("+ EVENT_RAND_ID +") REFERENCES "+ TABLE_RANDEVENT+"(" + REVENT_ID +"))";
 	
 	public static final String CREATE_INTERACTION_TABLE = "CREATE TABLE " + TABLE_INTERACTION + "(" + INTERACTION_PET_ID 
@@ -131,7 +132,7 @@ public class VPDHelper extends SQLiteOpenHelper {
 			+ ITEM_PRICE + " INTEGER," + ITEM_DESCRIPTION + " TEXT, " + ITEM_TYPE + "String, " + ITEM_IMPACT + " INTEGER, " + ITEM_ATTRIBUTE + "TEXT )";
 	
 	public static final String CREATE_OWNED_TABLE = "CREATE TABLE " + TABLE_OWNED + "(" + OWNED_USER_ID 
-			+ " INTEGER PRIMARY KEY," + OWNED_ITEM_ID + " INTEGER PRIMARY KEY," + OWNED_QUANTITY + " INTEGER, "
+			+ " INTEGER," + OWNED_ITEM_ID + " INTEGER," + OWNED_QUANTITY + " INTEGER, PRIMARY KEY( " + OWNER_USER_ID + " , " + OWNED_ITEM_ID +  " )"
 			+ "FOREIGN KEY("+ OWNED_USER_ID +") REFERENCES "+ TABLE_PET+"(" + USER_ID+"))";
 	
 	public static final String CREATE_JOB_TABLE = "CREATE TABLE " + TABLE_JOB + "(" + JOB_ID 
