@@ -148,6 +148,10 @@ public class VPDHelper extends SQLiteOpenHelper {
 			+ "(" + JOB_ID + " INTEGER PRIMARY KEY," + JOB_EARNINGS
 			+ " INTEGER," + JOB_DESCRIPTION + " TEXT)";
 	
+	//populate User and Pet
+	public static ContentValues TEST_USER = new ContentValues();
+	public static ContentValues TEST_PET = new ContentValues();
+	
 	//populate Illness table
 	public static ContentValues ILLNESS1 = new ContentValues();
 	public static ContentValues ILLNESS2 = new ContentValues();
@@ -195,6 +199,12 @@ public class VPDHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_OWNED_TABLE);
 		db.execSQL(CREATE_JOB_TABLE);
 		
+		populateTestUserPet();
+		populateIllnessTable();
+		populateREventTable();
+		populateItemTable();
+		populateJobTable();
+		
 		db.insert(TABLE_ILLNESS, null, ILLNESS1);
 		db.insert(TABLE_ILLNESS, null, ILLNESS2);
 		db.insert(TABLE_ILLNESS, null, ILLNESS3);
@@ -223,8 +233,13 @@ public class VPDHelper extends SQLiteOpenHelper {
 		db.insert(TABLE_JOB, null, JOB2);
 		db.insert(TABLE_JOB, null, JOB3);
 		
+		db.insert(TABLE_USER, null, TEST_USER);
+		db.insert(TABLE_PET, null, TEST_PET);
+		
 
 	}
+
+	
 
 	// Upgrading database, this happens when you change the version number
 	@Override
@@ -247,7 +262,24 @@ public class VPDHelper extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 	
-	public void populateIllnessTable(){
+	private void populateTestUserPet() {
+		TEST_USER.put(USER_ID,0);
+		TEST_USER.put(USER_NAME, "test_user");
+		TEST_USER.put(USER_PASSWORD, "test");
+		TEST_USER.put(USER_MONEY, 100);
+		TEST_USER.put(USER_PET, 0);
+		TEST_PET.put(PET_ID, 0);
+		TEST_PET.put(PET_NAME, "Meowy");
+		TEST_PET.put(PET_AGE, 0);
+		TEST_PET.put(PET_AGE_INC, 1);
+		TEST_PET.put(PET_WEIGHT, 10);
+		TEST_PET.put(PET_HEALTH, 100);
+		TEST_PET.putNull(PET_SICKNESS);
+		TEST_PET.put(PET_MOOD, "FRIENDLY");
+		
+	}
+	
+	private void populateIllnessTable(){
 		ILLNESS1.put(ILLNESS_NAME, "Flu");
 		ILLNESS1.put(ILLNESS_HAIMPACT, -1);
 		ILLNESS1.put(ILLNESS_HEIMPACT, -1);
@@ -265,7 +297,7 @@ public class VPDHelper extends SQLiteOpenHelper {
 		ILLNESS4.put(ILLNESS_HEIMPACT, -3);
 		ILLNESS4.put(ILLNESS_DESCRIPTION, "Ouch! It's bleeding!");
 	}
-	public void populateREventTable(){
+	private void populateREventTable(){
 		REVENT1.put(REVENT_ID, 0);
 		REVENT1.put(REVENT_HAIMPACT, 2);
 		REVENT1.put(REVENT_HEIMPACT, 0);
@@ -303,7 +335,7 @@ public class VPDHelper extends SQLiteOpenHelper {
 		REVENT5.put(REVENT_DESCRIPTION, "Chased after a butterfly for 2 miles..");
 	}
 	
-	public void populateItemTable(){
+	private void populateItemTable(){
 		ITEM1.put(ITEM_ID, 0);
 		ITEM1.put(ITEM_PRICE, 1);
 		ITEM1.put(ITEM_DESCRIPTION, "balloon");
@@ -330,7 +362,7 @@ public class VPDHelper extends SQLiteOpenHelper {
 		ITEM1.putNull(ITEM_ATTRIBUTE);
 	}
 	
-	public void populateJobTable(){
+	private void populateJobTable(){
 		JOB1.put(JOB_ID, 0);
 		JOB1.put(JOB_EARNINGS, 5);
 		JOB1.put(JOB_DESCRIPTION, "Clean the room");
