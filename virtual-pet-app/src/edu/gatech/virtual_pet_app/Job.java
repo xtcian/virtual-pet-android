@@ -34,6 +34,6 @@ public class Job
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+	 
 	
 }
