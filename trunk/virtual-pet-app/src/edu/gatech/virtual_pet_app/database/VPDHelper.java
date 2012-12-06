@@ -49,11 +49,7 @@ public class VPDHelper extends SQLiteOpenHelper {
 	public static final String ILLNESS_NAME = "Name";
 	public static final String ILLNESS_HAIMPACT = "HappinessImpact";
 	public static final String ILLNESS_HEIMPACT = "HealthImpact";
-
-	// Mood Table Columns names
-	public static final String MOOD_TYPE = "Type";
-	public static final String MOOD_HAIMPACT = "HappinessImpact";
-	public static final String MOOD_DESCRIPTION = "Description";
+	public static final String ILLNESS_DESCRIPTION = "Description";
 
 	// RandEvent Table Columns names
 	public static final String REVENT_ID = "_id";
@@ -110,11 +106,8 @@ public class VPDHelper extends SQLiteOpenHelper {
 
 	public static final String CREATE_ILLNESS_TABLE = "CREATE TABLE "
 			+ TABLE_ILLNESS + "(" + ILLNESS_NAME + " TEXT PRIMARY KEY,"
-			+ ILLNESS_HAIMPACT + " INTEGER, " + ILLNESS_HEIMPACT + " INTEGER)";
-
-	public static final String CREATE_MOOD_TABLE = "CREATE TABLE " + TABLE_MOOD
-			+ "(" + MOOD_TYPE + " TEXT PRIMARY KEY," + MOOD_HAIMPACT
-			+ " INTEGER, " + MOOD_DESCRIPTION + " TEXT)";
+			+ ILLNESS_HAIMPACT + " INTEGER, " + ILLNESS_HEIMPACT + " INTEGER, "
+			+ ILLNESS_DESCRIPTION + " TEXT)";
 
 	public static final String CREATE_RANDEVENT_TABLE = "CREATE TABLE"
 			+ TABLE_RANDEVENT + "(" + REVENT_ID + " INTEGER PRIMARY KEY,"
@@ -166,7 +159,6 @@ public class VPDHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_USER_TABLE);
 		db.execSQL(CREATE_PET_TABLE);
 		db.execSQL(CREATE_ILLNESS_TABLE);
-		db.execSQL(CREATE_MOOD_TABLE);
 		db.execSQL(CREATE_RANDEVENT_TABLE);
 		db.execSQL(CREATE_EVENT_TABLE);
 		db.execSQL(CREATE_INTERACTION_TABLE);
@@ -186,7 +178,6 @@ public class VPDHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PET);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ILLNESS);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOOD);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_RANDEVENT);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENT);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_INTERACTION);

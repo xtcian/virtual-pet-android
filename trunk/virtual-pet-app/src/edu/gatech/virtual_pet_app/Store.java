@@ -8,7 +8,7 @@ import edu.gatech.virtual_pet_app.Item.Type;
 
 
 public class Store {
-	/*contains a map with key = type of item, value= arraylist of that type of item*/
+	/*contains a map with key = type of item, value= map of that type of item*/
 	private Map<Item.Type,Map<String,Item>> store;
 
 	public Store(Map<Item.Type, Map<String, Item>> inventory) 
