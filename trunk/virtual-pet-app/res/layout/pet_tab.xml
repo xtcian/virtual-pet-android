@@ -39,12 +39,25 @@
             android:text="TextView" />
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/petImageBtn"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="4"
-        android:contentDescription="click on pet to interact"
-        android:src="@android:drawable/btn_star" />
+        android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/petImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="click on pet to interact"
+            android:src="@android:drawable/btn_star" />
+
+        <TextView
+            android:id="@+id/txtMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </LinearLayout>
 
 </LinearLayout>

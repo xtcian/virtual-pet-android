@@ -49,9 +49,11 @@ public class Pet {
 	}
 	public Pet(String name)
 	{
+		this.id=0;
 		this.name = name;
 		weight = 10;
 		age = 0;
+		ageinc = 1;
 		health = 100;
 		hunger = 50;
 		happiness = 100;

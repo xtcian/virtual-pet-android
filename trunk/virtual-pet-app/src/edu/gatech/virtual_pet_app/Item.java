@@ -10,14 +10,14 @@ public class Item {
 	private Type type;
 	public enum Type {FOOD,TOY,MEDICINE};
 	
-	public Item(int item_id, String description, int price, int impact, String sick, Type t, int quantity){
+	public Item(int item_id, int price,String description, Type t, int impact, String sick){
 		this.item_id=item_id;
 		this.description=description;
 		this.price=price;
 		this.impact = impact;
 		illnessImpact=sick;
 		type=t;
-		this.quantity = quantity;
+		quantity = 1;
 	}
 	public Item()
 	{
@@ -74,6 +74,9 @@ public class Item {
 	}
 	public void setType(Type type) {
 		this.type = type;
+	}
+	public String toString(){
+		return getDescription()+": $"+getPrice();
 	}
 	
 }

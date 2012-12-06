@@ -13,23 +13,34 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import edu.gatech.virtual_pet_app.EventHandler;
 import edu.gatech.virtual_pet_app.Pet;
 import edu.gatech.virtual_pet_app.R;
+import edu.gatech.virtual_pet_app.User;
+import edu.gatech.virtual_pet_app.database.PDSource;
 
 public class PetActivity extends Activity implements ActionBar.TabListener {
 
 	Pet myPet;
-
+	User myUser;
+	EventHandler eventHandler;
+	
 	Fragment petFragment;
 	Fragment storeFragment;
 	Fragment workFragment;
+	PDSource dataSource;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pet);
-
-		myPet = new Pet("Meowy");
+		
+		dataSource = new PDSource(this);
+		dataSource.open();
+		myUser = dataSource.getUser();
+		myPet = dataSource.getPet(myUser);
+		//eventHandler = new EventHandler(null, null, null);
+		
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(true);
@@ -138,4 +149,32 @@ public class PetActivity extends Activity implements ActionBar.TabListener {
 	public void setMyPet(Pet myPet) {
 		this.myPet = myPet;
 	}
+	
+	public User getMyUser() {
+		return myUser;
+	}
+
+	public void setMyUser(User myUser) {
+		this.myUser = myUser;
+	}
+	
+	public PDSource getDataSource(){
+		return dataSource;
+		
+	}
+	
+	@Override
+	  protected void onResume() {
+		Log.v("PetActivity","database opened");
+	    dataSource.open();
+	    super.onResume();
+	  }
+
+	  @Override
+	  protected void onPause() {
+		  Log.v("PetActivity","database closed");
+	    dataSource.close();
+	    super.onPause();
+	  }
+	  
 }
