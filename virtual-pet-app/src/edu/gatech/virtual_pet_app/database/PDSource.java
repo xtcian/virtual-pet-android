@@ -147,11 +147,14 @@ public class PDSource
 	{
 		List<REvent> events = new ArrayList<REvent>();
 		List<Interactions> inters = new ArrayList<REvent>();
+		List<Illness> ill = new ArrayList<Illness>();
 		EventHandler handler;
 		Cursor cursor = database.query(VPDHelper.TABLE_ITEM, itemCollumns, null, null, null, null, null);
 		Cursor c2 = database.query(VPDHelper.TABLE_INTERACTION, interactionCollumns, null, null, null, null, null);
+		Cursor c3 = database.query(VPDHelper.TABLE_ILLNESS, illnessCollumns, null, null, null, null, null);
+
 		//	cursor.moveToFirst();
-		if(cursor.moveToFirst() && c2.moveToFirst())
+		if(cursor.moveToFirst() && c2.moveToFirst() && c3.moveToFirst())
 		{		
 			while(!cursor.isAfterLast())
 			{
@@ -160,14 +163,21 @@ public class PDSource
 				cursor.moveToNext();
 			}
 			
-			while(!cursor.isAfterLast())
+			while(!c2.isAfterLast())
 			{
-				Interaction inter = new Interaction(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),cursor.getInt(3), cursor.getInt(4));
+				Interaction inter = new Interaction(c2.getInt(0), c2.getInt(1), c2.getInt(2),c2.getInt(3), c2.getInt(4));
 				inters.add(inter);
 				c2.addToNext();
 			}
 			
-			handler = new EventHandler(events, inters);
+			while(!c3.isAfterLast())
+			{
+				Illness illness = new Illness(c3.getString(0), c3.getInt(1), c3.getInt(2),c3.getInt(4));
+				inters.add(ill);
+				c3.addToNext();
+			}
+			
+			handler = new EventHandler(events, inters, ill);
 			return handler;
 		}	
 					
