@@ -6,12 +6,14 @@ package edu.gatech.virtual_pet_app;
  *
  */
 public class User {
+	private int user_id;
 	private String username;
 	private String password;
 	private int money;
 	private Inventory inventory;
 
-	public User(String uname, String pwd, Inventory inventory) {
+	public User(int user_id, String uname, String pwd, Inventory inventory) {
+		this.user_id = user_id;
 		username = uname;
 		password = pwd;
 		this.inventory = inventory;
@@ -118,6 +120,12 @@ public class User {
 	}
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
+	}
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+	public int getUser_id() {
+		return user_id;
 	}
 	
 }
