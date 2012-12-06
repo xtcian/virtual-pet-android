@@ -4,11 +4,13 @@ public class Illness {
 	private String name;
 	private int healthImpact;
 	private int happinessImpact;
+	private String description;
 
-	public Illness(String name,int health, int happy) {
+	public Illness(String name,int health, int happy, String description) {
 		this.name=name;
 		healthImpact = health;
 		happinessImpact = happy;
+		this.description = description;
 
 	}
 	public String getName(){
@@ -24,3 +26,4 @@ public class Illness {
 	}
 
 }
+
