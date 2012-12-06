@@ -4,22 +4,17 @@ public class Item {
 	private int item_id;
 	private String description;
 	private int price;
-	private int healthImpact;
-	private int happinessImpact;
-	private int hungerImpact;
-	private Illness illnessImpact;
+	private int impact;
+	private String illnessImpact;
 	private int quantity;
 	private Type type;
 	public enum Type {FOOD,TOY,MEDICINE};
 	
-	public Item(int item_id, String description, int price, int health, int happy, 
-			int hunger, Illness sick, Type t, int quantity){
+	public Item(int item_id, String description, int price, int impact, String sick, Type t, int quantity){
 		this.item_id=item_id;
 		this.description=description;
 		this.price=price;
-		healthImpact=health;
-		happinessImpact=happy;
-		hungerImpact=hunger;
+		this.impact = impact;
 		illnessImpact=sick;
 		type=t;
 		this.quantity = quantity;
@@ -27,26 +22,19 @@ public class Item {
 	public Item()
 	{
 		
+
 	}
 	public int getPrice()
 	{
 		return this.price;
 	}
 	
-	public int getHealthImpact()
+	public int getImpact()
 	{
-		return this.healthImpact;
+		return this.impact;
 	}
 	
-	public int getHappinessImpact()
-	{
-		return this.happinessImpact;
-	}
-	public int getHungerImpact()
-	{
-		return this.hungerImpact;
-	}
-	public Illness getIllnessImpact()
+	public String getIllnessImpact()
 	{
 		return this.illnessImpact;
 	}
@@ -66,4 +54,26 @@ public class Item {
 	{
 		this.quantity = num;
 	}
+	public int getItem_id() {
+		return item_id;
+	}
+	public void setItem_id(int item_id) {
+		this.item_id = item_id;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public void setImpact(int impact) {
+		this.impact = impact;
+	}
+	public void setIllnessImpact(String illnessImpact) {
+		this.illnessImpact = illnessImpact;
+	}
+	public void setType(Type type) {
+		this.type = type;
+	}
+	
 }
