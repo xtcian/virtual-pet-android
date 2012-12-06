@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class VPDHelper{ //extends SQLiteOpenHelper {
+public class VPDHelper extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
@@ -23,7 +23,6 @@ public class VPDHelper{ //extends SQLiteOpenHelper {
 	public static final String TABLE_EVENT = "Event";
 	public static final String TABLE_INTERACTION = "Interaction";
 	public static final String TABLE_ITEM = "Item";
-	public static final String TABLE_CATEGORY = "Category";
 	public static final String TABLE_OWNED = "Owned";
 	public static final String TABLE_JOB = "Job";
 
@@ -175,7 +174,6 @@ public class VPDHelper{ //extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENT);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_INTERACTION);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEM);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_OWNED);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_JOB);
 
