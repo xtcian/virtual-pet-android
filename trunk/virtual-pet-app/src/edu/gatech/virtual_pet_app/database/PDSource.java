@@ -217,9 +217,12 @@ public class PDSource {
 		// cursor.moveToFirst();
 		if (cursor.moveToFirst() && c2.moveToFirst() && c3.moveToFirst()) {
 			while (!cursor.isAfterLast()) {
+				Cursor c4 = database.query(VPDHelper.TABLE_ITEM, itemColumns, c3.getString(5) + " = " + VPDHelper.ITEM_DESCRIPTION ,null,null,null,null);
+				Item item = new Item(c4.getInt(0), c4.getInt(1), c4.getString(2), c4.getString(3), c4.getInt(4), c4.getString(5));
 				REvent event = new REvent(cursor.getInt(0), cursor.getInt(1),
 						cursor.getInt(2), cursor.getInt(3),
-						cursor.getString(4), cursor.getString(5));
+						cursor.getString(4),item, cursor.getString(6));
+
 				events.add(event);
 				cursor.moveToNext();
 			}
