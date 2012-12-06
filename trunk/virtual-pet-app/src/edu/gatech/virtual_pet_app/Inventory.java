@@ -1,8 +1,10 @@
 package edu.gatech.virtual_pet_app;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import android.util.Log;
+import edu.gatech.virtual_pet_app.Item.Type;
 
 
 public class Inventory {
@@ -16,8 +18,8 @@ public class Inventory {
 	}
 	public Inventory()
 	{
-		Map<String, Item> item = new HashMap();
-		inventory = new HashMap();
+		Map<String, Item> item = new HashMap<String, Item>();
+		inventory = new HashMap<Type, Map<String, Item>>();
 		inventory.put(Item.Type.FOOD, item);
 		inventory.put(Item.Type.MEDICINE, item);
 		inventory.put(Item.Type.TOY, item);
@@ -41,8 +43,7 @@ public class Inventory {
 	{
 		if(inventory.get(item.getType()).get(item.getDescription()) == null)
 		{
-			System.out.println("it should not be possible to get this message. error in Inventory.removeItem()");
-			System.exit(0);
+			Log.d("Inventory","removing something that DNE! ERROR!");
 		}
 		else
 		{
