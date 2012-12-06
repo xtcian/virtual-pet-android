@@ -88,7 +88,7 @@ public class Pet {
 	 */
 	void takeMedicine(Item medicine)
 	{
-		if(illness.equals(medicine.getIllnessImpact())){
+		if(illness.getName().equals(medicine.getIllnessImpact())){
 			this.illness=null;
 			health+=medicine.getImpact();
 		}
