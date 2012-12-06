@@ -43,7 +43,7 @@ public class PDSource {
 			VPDHelper.INTERACTION_POST_HEALTH,
 			VPDHelper.INTERACTION_POST_HUNGER };
 	private String[] jobColumns = { VPDHelper.JOB_ID, VPDHelper.JOB_EARNINGS,
-			VPDHelper.JOB_TYPE, VPDHelper.JOB_DESCRIPTION };
+			VPDHelper.JOB_DESCRIPTION };
 	private String[] ownedColumns = { VPDHelper.OWNED_USER_ID,
 			VPDHelper.OWNED_ITEM_ID, VPDHelper.OWNED_QUANTITY };
 	private String[] itemColumns = { VPDHelper.ITEM_ID, VPDHelper.ITEM_PRICE,
@@ -95,8 +95,8 @@ public class PDSource {
 		Cursor cursor = database.query(VPDHelper.TABLE_USER, userColumns, null,
 				null, null, null, null);
 		cursor.moveToFirst();
-//		User user = new User(cursor.getInt(0), cursor.getString(1),
-//				cursor.getString(2), cursor.getInt(3));
+		// User user = new User(cursor.getInt(0), cursor.getString(1),
+		// cursor.getString(2), cursor.getInt(3));
 		cursor.moveToNext();
 
 		return null;

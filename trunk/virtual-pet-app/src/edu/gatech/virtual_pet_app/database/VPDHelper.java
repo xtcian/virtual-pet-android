@@ -1,5 +1,6 @@
 package edu.gatech.virtual_pet_app.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -88,7 +89,6 @@ public class VPDHelper extends SQLiteOpenHelper {
 	// Job Table Columns names
 	public static final String JOB_ID = "job_id";
 	public static final String JOB_EARNINGS = "earnings";
-	public static final String JOB_TYPE = "type";
 	public static final String JOB_DESCRIPTION = "description";
 
 	// create table queries here
@@ -146,7 +146,36 @@ public class VPDHelper extends SQLiteOpenHelper {
 
 	public static final String CREATE_JOB_TABLE = "CREATE TABLE " + TABLE_JOB
 			+ "(" + JOB_ID + " INTEGER PRIMARY KEY," + JOB_EARNINGS
-			+ " INTEGER," + JOB_TYPE + " TEXT, " + JOB_DESCRIPTION + " TEXT)";
+			+ " INTEGER," + JOB_DESCRIPTION + " TEXT)";
+	
+	//populate Illness table
+	public static ContentValues ILLNESS1 = new ContentValues();
+	public static ContentValues ILLNESS2 = new ContentValues();
+	public static ContentValues ILLNESS3 = new ContentValues();
+	public static ContentValues ILLNESS4 = new ContentValues();
+	//populate REvent table
+	public static ContentValues REVENT1 = new ContentValues();
+	public static ContentValues REVENT2 = new ContentValues();
+	public static ContentValues REVENT3 = new ContentValues();
+	public static ContentValues REVENT4 = new ContentValues();
+	public static ContentValues REVENT5 = new ContentValues();
+	//populate Item table
+	public static ContentValues ITEM1 = new ContentValues();
+	public static ContentValues ITEM2 = new ContentValues();
+	public static ContentValues ITEM3 = new ContentValues();
+	public static ContentValues ITEM4 = new ContentValues();
+//	public static ContentValues ITEM5 = new ContentValues();
+//	public static ContentValues ITEM6 = new ContentValues();
+//	public static ContentValues ITEM7 = new ContentValues();
+//	public static ContentValues ITEM8 = new ContentValues();
+//	public static ContentValues ITEM9 = new ContentValues();
+//	public static ContentValues ITEM10 = new ContentValues();
+//	public static ContentValues ITEM11 = new ContentValues();
+//	public static ContentValues ITEM12 = new ContentValues();
+	//populate Job table
+	public static ContentValues JOB1 = new ContentValues();
+	public static ContentValues JOB2 = new ContentValues();
+	public static ContentValues JOB3 = new ContentValues();
 
 	public VPDHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -165,6 +194,35 @@ public class VPDHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_ITEM_TABLE);
 		db.execSQL(CREATE_OWNED_TABLE);
 		db.execSQL(CREATE_JOB_TABLE);
+		
+		db.insert(TABLE_ILLNESS, null, ILLNESS1);
+		db.insert(TABLE_ILLNESS, null, ILLNESS2);
+		db.insert(TABLE_ILLNESS, null, ILLNESS3);
+		db.insert(TABLE_ILLNESS, null, ILLNESS4);
+		
+		db.insert(TABLE_RANDEVENT, null, REVENT1);
+		db.insert(TABLE_RANDEVENT, null, REVENT2);
+		db.insert(TABLE_RANDEVENT, null, REVENT3);
+		db.insert(TABLE_RANDEVENT, null, REVENT4);
+		db.insert(TABLE_RANDEVENT, null, REVENT5);
+		
+		db.insert(TABLE_ITEM, null, ITEM1);
+		db.insert(TABLE_ITEM, null, ITEM2);
+		db.insert(TABLE_ITEM, null, ITEM3);
+		db.insert(TABLE_ITEM, null, ITEM4);
+//		db.insert(TABLE_ITEM, null, ITEM5);
+//		db.insert(TABLE_ITEM, null, ITEM6);
+//		db.insert(TABLE_ITEM, null, ITEM7);
+//		db.insert(TABLE_ITEM, null, ITEM8);
+//		db.insert(TABLE_ITEM, null, ITEM9);
+//		db.insert(TABLE_ITEM, null, ITEM10);
+//		db.insert(TABLE_ITEM, null, ITEM11);
+//		db.insert(TABLE_ITEM, null, ITEM12);
+		
+		db.insert(TABLE_JOB, null, JOB1);
+		db.insert(TABLE_JOB, null, JOB2);
+		db.insert(TABLE_JOB, null, JOB3);
+		
 
 	}
 
@@ -188,5 +246,101 @@ public class VPDHelper extends SQLiteOpenHelper {
 		// Create tables again
 		onCreate(db);
 	}
+	
+	public void populateIllnessTable(){
+		ILLNESS1.put(ILLNESS_NAME, "Flu");
+		ILLNESS1.put(ILLNESS_HAIMPACT, -1);
+		ILLNESS1.put(ILLNESS_HEIMPACT, -1);
+		ILLNESS1.put(ILLNESS_DESCRIPTION, "Sneezing and coughing!");
+		ILLNESS2.put(ILLNESS_NAME, "Fever");
+		ILLNESS2.put(ILLNESS_HAIMPACT, -5);
+		ILLNESS2.put(ILLNESS_HEIMPACT, -5);
+		ILLNESS2.put(ILLNESS_DESCRIPTION, "Burning and shivering!");
+		ILLNESS3.put(ILLNESS_NAME, "Cancer");
+		ILLNESS3.put(ILLNESS_HAIMPACT, -10);
+		ILLNESS3.put(ILLNESS_HEIMPACT, -10);
+		ILLNESS3.put(ILLNESS_DESCRIPTION, "Seems fine, but really?");
+		ILLNESS4.put(ILLNESS_NAME, "Bruise");
+		ILLNESS4.put(ILLNESS_HAIMPACT, -10);
+		ILLNESS4.put(ILLNESS_HEIMPACT, -3);
+		ILLNESS4.put(ILLNESS_DESCRIPTION, "Ouch! It's bleeding!");
+	}
+	public void populateREventTable(){
+		REVENT1.put(REVENT_ID, 0);
+		REVENT1.put(REVENT_HAIMPACT, 2);
+		REVENT1.put(REVENT_HEIMPACT, 0);
+		REVENT1.put(REVENT_HUIMPACT, 0);
+		REVENT1.putNull(REVENT_ILLNESS);
+		REVENT1.putNull(REVENT_ITEM);
+		REVENT1.put(REVENT_DESCRIPTION, "Thinking about you, and happy");
+		REVENT2.put(REVENT_ID, 1);
+		REVENT2.put(REVENT_HAIMPACT, 0);
+		REVENT2.put(REVENT_HEIMPACT, 0);
+		REVENT2.put(REVENT_HUIMPACT, 0);
+		REVENT2.put(REVENT_ILLNESS, "Bruise");
+		REVENT2.putNull(REVENT_ITEM);
+		REVENT2.put(REVENT_DESCRIPTION, "Tripped by a rock, ouch!");
+		REVENT3.put(REVENT_ID, 2);
+		REVENT3.put(REVENT_HAIMPACT, 10);
+		REVENT3.put(REVENT_HEIMPACT, 2);
+		REVENT3.put(REVENT_HUIMPACT, 0);
+		REVENT3.putNull(REVENT_ILLNESS);
+		REVENT3.putNull(REVENT_ITEM);
+		REVENT3.put(REVENT_DESCRIPTION, "Saw a pretty flower, awwww");
+		REVENT4.put(REVENT_ID, 3);
+		REVENT4.put(REVENT_HAIMPACT, 15);
+		REVENT4.put(REVENT_HEIMPACT, 0);
+		REVENT4.put(REVENT_HUIMPACT, 0);
+		REVENT4.putNull(REVENT_ILLNESS);
+		REVENT4.put(REVENT_ITEM,"balloon");
+		REVENT4.put(REVENT_DESCRIPTION, "Found a balloon!");
+		REVENT5.put(REVENT_ID, 4);
+		REVENT5.put(REVENT_HAIMPACT, 0);
+		REVENT5.put(REVENT_HEIMPACT, 0);
+		REVENT5.put(REVENT_HUIMPACT, -5);
+		REVENT5.putNull(REVENT_ILLNESS);
+		REVENT5.putNull(REVENT_ITEM);
+		REVENT5.put(REVENT_DESCRIPTION, "Chased after a butterfly for 2 miles..");
+	}
+	
+	public void populateItemTable(){
+		ITEM1.put(ITEM_ID, 0);
+		ITEM1.put(ITEM_PRICE, 1);
+		ITEM1.put(ITEM_DESCRIPTION, "balloon");
+		ITEM1.put(ITEM_TYPE, "TOY");
+		ITEM1.put(ITEM_IMPACT, 15);
+		ITEM1.putNull(ITEM_ATTRIBUTE);
+		ITEM1.put(ITEM_ID, 1);
+		ITEM1.put(ITEM_PRICE, 2);
+		ITEM1.put(ITEM_DESCRIPTION, "snack");
+		ITEM1.put(ITEM_TYPE, "FOOD");
+		ITEM1.put(ITEM_IMPACT, 10);
+		ITEM1.putNull(ITEM_ATTRIBUTE);
+		ITEM1.put(ITEM_ID, 2);
+		ITEM1.put(ITEM_PRICE, 10);
+		ITEM1.put(ITEM_DESCRIPTION, "flu shot");
+		ITEM1.put(ITEM_TYPE, "MEDICINE");
+		ITEM1.put(ITEM_IMPACT, 1);
+		ITEM1.put(ITEM_ATTRIBUTE,"illness");
+		ITEM1.put(ITEM_ID, 3);
+		ITEM1.put(ITEM_PRICE, 50);
+		ITEM1.put(ITEM_DESCRIPTION, "vacation to Hawaii");
+		ITEM1.put(ITEM_TYPE, "TOY");
+		ITEM1.put(ITEM_IMPACT, 50);
+		ITEM1.putNull(ITEM_ATTRIBUTE);
+	}
+	
+	public void populateJobTable(){
+		JOB1.put(JOB_ID, 0);
+		JOB1.put(JOB_EARNINGS, 5);
+		JOB1.put(JOB_DESCRIPTION, "Clean the room");
+		JOB1.put(JOB_ID, 1);
+		JOB1.put(JOB_EARNINGS, 15);
+		JOB1.put(JOB_DESCRIPTION, "Mow the lawn");
+		JOB1.put(JOB_ID, 2);
+		JOB1.put(JOB_EARNINGS, 100);
+		JOB1.put(JOB_DESCRIPTION, "Make an Android app");
+	}
+	
 
 }
