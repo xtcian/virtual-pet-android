@@ -7,23 +7,45 @@ public class Illness {
 	private String description;
 
 	public Illness(String name,int health, int happy, String description) {
-		this.name=name;
-		healthImpact = health;
-		happinessImpact = happy;
-		this.description = description;
+		this.setName(name);
+		setHealthImpact(health);
+		setHappinessImpact(happy);
+		this.setDescription(description);
 
 	}
-	public String getName(){
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
 		return name;
+	}
+
+	public void setHealthImpact(int healthImpact) {
+		this.healthImpact = healthImpact;
 	}
 
 	public int getHealthImpact() {
 		return healthImpact;
 	}
 
+	public void setHappinessImpact(int happinessImpact) {
+		this.happinessImpact = happinessImpact;
+	}
+
 	public int getHappinessImpact() {
 		return happinessImpact;
 	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+	
 
 }
 
