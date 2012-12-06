@@ -44,25 +44,30 @@ public class PDSource
 	}
 	
 	//---------------------------------------------------------------
-	public int addPet()
+	public Pet createPet()
 	{
-		ContentValues values = new ContentValues();
-		values.put();
 		
-		return 0;
+		return null;
 	}
-
+	public User createUser(String uname, String password)
+	{
+		
+	}
 	public void givePetItem(Pet pet, Item item)
 	{
 	//	db.execSQL("INSERT INTO Interaction VALUES("");
 	}
-	public void pushPet(Pet pet)
+	public Pet updatePet(Pet pet)
 	{
 		
 	}
-	public void pushUser()
+	public void updateMoney(User user)
 	{
 		
+	}
+	public Pet givePetREvent()
+	{
+		return null;
 	}
 	public User getUser()
 	{
