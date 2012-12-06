@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 
 
 public class PDSource
@@ -55,11 +56,11 @@ public class PDSource
 		database.delete(VPDHelper.TABLE_PET, VPDHelper.PET_ID + "=" + id, null);
 	}
 	
-	public void feedEvent(int post)
+	public void insertFeedInteraction(int post)
 	{
 	//	db.execSQL("INSERT INTO Interaction VALUES("");
 	}
-	public void playEvent(int post)
+	public void insertPlayInteraction(int post)
 	{
 		//insert interaction
 	}
@@ -71,13 +72,43 @@ public class PDSource
 	{
 		
 	}
+	public User getUser()
+	{
+		
+		Cursor cursor = database.query(VPDHelper.TABLE_USER, userCollumns, null, null, null, null, null);
+		cursor.moveToFirst();
+		User user = new User(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
+		cursor.moveToNext();
+		
+		return user;
+	}
 	public void pushOwned()
 	{
 		//add the bought items
 	}
-	public void updateOwned(Item item, int newQuantity)
+	public List<Item> getOwned()
 	{
-
+		List<Item> items = new ArrayList<Item>();
+		
+		Cursor cursor = database.query(VPDHelper.TABLE_OWNED, ownedCollumns, null, null, null, null, null);
+		Cursor c2;
+		cursor.moveToFirst();
+		while(!cursor.isAfterLast())
+		{
+			Item item = new Item();
+			item.setItem_id(cursor.getInt(1));
+			item.setQuantity(cursor.getInt(2));
+			c2 = database.query(VPDHelper.TABLE_ITEM, null, VPDHelper.ITEM_ID + "=" + item.getItem_id(), null, null, null, null, null);
+			item.setPrice(cursor.getInt(1));
+			item.setDescription(cursor.getString(2));
+			item.setType(Item.Type.valueOf(cursor.getString(3)));
+			item.setImpact(cursor.getInt(4));
+			item.setIllnessImpact(cursor.getString(5));
+			items.add(item);
+			cursor.moveToNext();
+		}
+		
+		return items;
 	}
 	public List<Item> getItems()
 	{
