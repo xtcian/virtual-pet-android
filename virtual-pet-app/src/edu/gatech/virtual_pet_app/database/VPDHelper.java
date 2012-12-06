@@ -10,10 +10,10 @@ public class VPDHelper extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 3;
 
 	// Database Name
-	public static final String DATABASE_NAME = "VirtualPet";
+	public static final String DATABASE_NAME = "VirtualPet.db";
 
 	// table names
 	public static final String TABLE_USER = "User";
@@ -94,7 +94,7 @@ public class VPDHelper extends SQLiteOpenHelper {
 	// create table queries here
 	public static final String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER
 			+ "(" + USER_ID + " INTEGER PRIMARY KEY," + USER_NAME + " TEXT,"
-			+ USER_PASSWORD + " TEXT," + USER_MONEY + " INTEGER" + USER_PET
+			+ USER_PASSWORD + " TEXT," + USER_MONEY + " INTEGER, " + USER_PET
 			+ " INTEGER" + ")";
 
 	public static final String CREATE_PET_TABLE = "CREATE TABLE " + TABLE_PET
@@ -109,7 +109,7 @@ public class VPDHelper extends SQLiteOpenHelper {
 			+ ILLNESS_HAIMPACT + " INTEGER, " + ILLNESS_HEIMPACT + " INTEGER, "
 			+ ILLNESS_DESCRIPTION + " TEXT)";
 
-	public static final String CREATE_RANDEVENT_TABLE = "CREATE TABLE"
+	public static final String CREATE_RANDEVENT_TABLE = "CREATE TABLE "
 			+ TABLE_RANDEVENT + "(" + REVENT_ID + " INTEGER PRIMARY KEY,"
 			+ REVENT_HAIMPACT + " INTEGER," + REVENT_HEIMPACT + " INTEGER,"
 			+ REVENT_HUIMPACT + " INTEGER," + REVENT_ILLNESS + " TEXT,"
@@ -118,7 +118,7 @@ public class VPDHelper extends SQLiteOpenHelper {
 	public static final String CREATE_EVENT_TABLE = "CREATE TABLE "
 			+ TABLE_EVENT + "(" + EVENT_PET_ID + " INTEGER, " + EVENT_RAND_ID
 			+ " INTEGER, " + EVENT_TIME + " DATETIME, PRIMARY KEY("
-			+ EVENT_PET_ID + " , " + EVENT_RAND_ID + " )" + "FOREIGN KEY("
+			+ EVENT_PET_ID + " , " + EVENT_RAND_ID + " ), " + "FOREIGN KEY("
 			+ EVENT_PET_ID + ") REFERENCES " + TABLE_PET + "(" + PET_ID
 			+ "),  " + "FOREIGN KEY(" + EVENT_RAND_ID + ") REFERENCES "
 			+ TABLE_RANDEVENT + "(" + REVENT_ID + "))";
@@ -134,13 +134,13 @@ public class VPDHelper extends SQLiteOpenHelper {
 	public static final String CREATE_ITEM_TABLE = "CREATE TABLE " + TABLE_ITEM
 			+ "(" + ITEM_ID + " INTEGER PRIMARY KEY, " + ITEM_PRICE
 			+ " INTEGER," + ITEM_DESCRIPTION + " TEXT, " + ITEM_TYPE
-			+ "String, " + ITEM_IMPACT + " INTEGER, " + ITEM_ATTRIBUTE
-			+ "TEXT )";
+			+ " TEXT, " + ITEM_IMPACT + " INTEGER, " + ITEM_ATTRIBUTE
+			+ " TEXT )";
 
 	public static final String CREATE_OWNED_TABLE = "CREATE TABLE "
 			+ TABLE_OWNED + "(" + OWNED_USER_ID + " INTEGER," + OWNED_ITEM_ID
 			+ " INTEGER," + OWNED_QUANTITY + " INTEGER, PRIMARY KEY( "
-			+ OWNED_USER_ID + " , " + OWNED_ITEM_ID + " )" + "FOREIGN KEY("
+			+ OWNED_USER_ID + " , " + OWNED_ITEM_ID + " ), " + "FOREIGN KEY("
 			+ OWNED_USER_ID + ") REFERENCES " + TABLE_PET + "(" + USER_ID
 			+ "))";
 
@@ -274,6 +274,8 @@ public class VPDHelper extends SQLiteOpenHelper {
 		TEST_PET.put(PET_AGE_INC, 1);
 		TEST_PET.put(PET_WEIGHT, 10);
 		TEST_PET.put(PET_HEALTH, 100);
+		TEST_PET.put(PET_HUNGER, 50);
+		TEST_PET.put(PET_HAPPINESS, 100);
 		TEST_PET.putNull(PET_SICKNESS);
 		TEST_PET.put(PET_MOOD, "FRIENDLY");
 		
@@ -342,36 +344,36 @@ public class VPDHelper extends SQLiteOpenHelper {
 		ITEM1.put(ITEM_TYPE, "TOY");
 		ITEM1.put(ITEM_IMPACT, 15);
 		ITEM1.putNull(ITEM_ATTRIBUTE);
-		ITEM1.put(ITEM_ID, 1);
-		ITEM1.put(ITEM_PRICE, 2);
-		ITEM1.put(ITEM_DESCRIPTION, "snack");
-		ITEM1.put(ITEM_TYPE, "FOOD");
-		ITEM1.put(ITEM_IMPACT, 10);
-		ITEM1.putNull(ITEM_ATTRIBUTE);
-		ITEM1.put(ITEM_ID, 2);
-		ITEM1.put(ITEM_PRICE, 10);
-		ITEM1.put(ITEM_DESCRIPTION, "flu shot");
-		ITEM1.put(ITEM_TYPE, "MEDICINE");
-		ITEM1.put(ITEM_IMPACT, 1);
-		ITEM1.put(ITEM_ATTRIBUTE,"illness");
-		ITEM1.put(ITEM_ID, 3);
-		ITEM1.put(ITEM_PRICE, 50);
-		ITEM1.put(ITEM_DESCRIPTION, "vacation to Hawaii");
-		ITEM1.put(ITEM_TYPE, "TOY");
-		ITEM1.put(ITEM_IMPACT, 50);
-		ITEM1.putNull(ITEM_ATTRIBUTE);
+		ITEM2.put(ITEM_ID, 1);
+		ITEM2.put(ITEM_PRICE, 2);
+		ITEM2.put(ITEM_DESCRIPTION, "snack");
+		ITEM2.put(ITEM_TYPE, "FOOD");
+		ITEM2.put(ITEM_IMPACT, 10);
+		ITEM2.putNull(ITEM_ATTRIBUTE);
+		ITEM3.put(ITEM_ID, 2);
+		ITEM3.put(ITEM_PRICE, 10);
+		ITEM3.put(ITEM_DESCRIPTION, "flu shot");
+		ITEM3.put(ITEM_TYPE, "MEDICINE");
+		ITEM3.put(ITEM_IMPACT, 1);
+		ITEM3.put(ITEM_ATTRIBUTE,"illness");
+		ITEM4.put(ITEM_ID, 3);
+		ITEM4.put(ITEM_PRICE, 50);
+		ITEM4.put(ITEM_DESCRIPTION, "vacation to Hawaii");
+		ITEM4.put(ITEM_TYPE, "TOY");
+		ITEM4.put(ITEM_IMPACT, 50);
+		ITEM4.putNull(ITEM_ATTRIBUTE);
 	}
 	
 	private void populateJobTable(){
 		JOB1.put(JOB_ID, 0);
 		JOB1.put(JOB_EARNINGS, 5);
 		JOB1.put(JOB_DESCRIPTION, "Clean the room");
-		JOB1.put(JOB_ID, 1);
-		JOB1.put(JOB_EARNINGS, 15);
-		JOB1.put(JOB_DESCRIPTION, "Mow the lawn");
-		JOB1.put(JOB_ID, 2);
-		JOB1.put(JOB_EARNINGS, 100);
-		JOB1.put(JOB_DESCRIPTION, "Make an Android app");
+		JOB2.put(JOB_ID, 1);
+		JOB2.put(JOB_EARNINGS, 15);
+		JOB2.put(JOB_DESCRIPTION, "Mow the lawn");
+		JOB3.put(JOB_ID, 2);
+		JOB3.put(JOB_EARNINGS, 100);
+		JOB3.put(JOB_DESCRIPTION, "Make an Android app");
 	}
 	
 

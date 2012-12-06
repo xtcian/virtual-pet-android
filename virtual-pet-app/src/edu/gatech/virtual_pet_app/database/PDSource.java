@@ -83,6 +83,21 @@ public class PDSource {
 	}
 
 	public void updateMoney(User user) {
+		// Cursor cursor = database.query(VPDHelper.TABLE_USER, userColumns,
+		// null,
+		// null, null, null, null);
+		// cursor.moveToFirst();
+		ContentValues values = new ContentValues();
+		values.put(VPDHelper.USER_ID, user.getUser_id());
+		values.put(VPDHelper.USER_NAME, user.getUsername());
+		values.put(VPDHelper.USER_PASSWORD, user.getPassword());
+		values.put(VPDHelper.USER_MONEY, user.getMoney());
+		values.put(VPDHelper.USER_PET, user.getPet_id());
+		database.update(VPDHelper.TABLE_USER, values,
+				VPDHelper.USER_ID + "=? ",
+				new String[] { String.valueOf(user.getUser_id()) });
+
+		// cursor.close();
 
 	}
 
@@ -90,16 +105,29 @@ public class PDSource {
 		return null;
 	}
 
-	public User getUser() {
+	public User getUser() { // just a temp method for testing, should change
+							// later
 
 		Cursor cursor = database.query(VPDHelper.TABLE_USER, userColumns, null,
 				null, null, null, null);
 		cursor.moveToFirst();
-		// User user = new User(cursor.getInt(0), cursor.getString(1),
-		// cursor.getString(2), cursor.getInt(3));
-		cursor.moveToNext();
+		User user = new User(cursor.getInt(0), cursor.getString(1),
+				cursor.getString(2), cursor.getInt(3), new Inventory(),
+				cursor.getInt(4));
+		cursor.close();
 
-		return null;
+		return user;
+	}
+
+	public Pet getPet(User user) {// just a temp method for testing, should
+									// change later
+		Cursor cursor = database.query(VPDHelper.TABLE_PET, petColumns,
+				VPDHelper.PET_ID + "=" + user.getPet_id(), null, null, null,
+				null);
+		cursor.moveToFirst();
+		Pet pet = new Pet(cursor.getString(1));
+		cursor.close();
+		return pet;
 	}
 
 	/**
@@ -148,14 +176,16 @@ public class PDSource {
 
 		Cursor cursor = database.query(VPDHelper.TABLE_OWNED, ownedColumns,
 				null, null, null, null, null);
-		Cursor c2;
 
 		if (cursor.moveToFirst()) {
+			Cursor c2 = database.query(VPDHelper.TABLE_ITEM, itemColumns, null,
+					null, null, null, null, null);
+			;
 			while (!cursor.isAfterLast()) {
 				Item item = new Item();
 				item.setItem_id(cursor.getInt(1));
 				item.setQuantity(cursor.getInt(2));
-				c2 = database.query(VPDHelper.TABLE_ITEM, null,
+				c2 = database.query(VPDHelper.TABLE_ITEM, itemColumns,
 						VPDHelper.ITEM_ID + "=" + item.getItem_id(), null,
 						null, null, null, null);
 				if (c2.moveToFirst() == false) {
@@ -169,9 +199,11 @@ public class PDSource {
 				inventory.addItem(item);
 				cursor.moveToNext();
 			}
-
+			cursor.close();
+			c2.close();
 			return inventory;
 		} else {
+			cursor.close();
 			return null;
 		}
 	}
@@ -199,6 +231,7 @@ public class PDSource {
 			store.addItem(item);
 			cursor.moveToNext();
 		}
+		cursor.close();
 		return store;
 	}
 
@@ -217,11 +250,15 @@ public class PDSource {
 		// cursor.moveToFirst();
 		if (cursor.moveToFirst() && c2.moveToFirst() && c3.moveToFirst()) {
 			while (!cursor.isAfterLast()) {
-				Cursor c4 = database.query(VPDHelper.TABLE_ITEM, itemColumns, c3.getString(5) + " = " + VPDHelper.ITEM_DESCRIPTION ,null,null,null,null);
-				Item item = new Item(c4.getInt(0), c4.getInt(1), c4.getString(2), c4.getString(3), c4.getInt(4), c4.getString(5));
+				Cursor c4 = database.query(VPDHelper.TABLE_ITEM, itemColumns,
+						c3.getString(5) + " = " + VPDHelper.ITEM_DESCRIPTION,
+						null, null, null, null);
+				Item item = new Item(c4.getInt(0), c4.getInt(1),
+						c4.getString(2), Item.Type.valueOf(c4.getString(3)),
+						c4.getInt(4), c4.getString(5));
 				REvent event = new REvent(cursor.getInt(0), cursor.getInt(1),
 						cursor.getInt(2), cursor.getInt(3),
-						cursor.getString(4),item, cursor.getString(6));
+						cursor.getString(4), item, cursor.getString(6));
 
 				events.add(event);
 				cursor.moveToNext();
@@ -242,15 +279,20 @@ public class PDSource {
 			}
 
 			handler = new EventHandler(events, inters, ill);
+			cursor.close();
+			c2.close();
+			c3.close();
 			return handler;
 		}
-
+		cursor.close();
+		c2.close();
+		c3.close();
 		return null;
 
 	}
 
-	public List<Job> getJobs(Pet pet) {
-		List<Job> jobs = new ArrayList<Job>();
+	public ArrayList<Job> getJobs(Pet pet) {
+		ArrayList<Job> jobs = new ArrayList<Job>();
 
 		Cursor cursor = database.query(VPDHelper.TABLE_JOB, jobColumns, null,
 				null, null, null, null);
@@ -260,13 +302,14 @@ public class PDSource {
 				Job job = new Job();
 				job.setId(cursor.getInt(0));
 				job.setEarnings(cursor.getInt(1));
-				job.setDescription(cursor.getString(3));
+				job.setDescription(cursor.getString(2));
 				jobs.add(job);
 				cursor.moveToNext();
 			}
+			cursor.close();
 			return jobs;
 		}
-
+		cursor.close();
 		return null;
 	}
 
