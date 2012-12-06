@@ -8,7 +8,8 @@ public class REvent
 	private int hunger;
 	private String illness;
 	private String description;
-	public REvent(int id, int happiness, int health, int hunger, String illness, String description )
+	private Item item;
+	public REvent(int id, int happiness, int health, int hunger, String illness,Item item, String description )
 	{
 		this.id = id;
 		this.happiness = happiness;
@@ -16,6 +17,7 @@ public class REvent
 		this.hunger = hunger;
 		this.illness = illness;
 		this.description = description;
+		this.item = item;
 	}
 	public int getId() {
 		return id;
@@ -52,6 +54,10 @@ public class REvent
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Item getItem()
+	{
+		return item;
 	}
 	
 }
