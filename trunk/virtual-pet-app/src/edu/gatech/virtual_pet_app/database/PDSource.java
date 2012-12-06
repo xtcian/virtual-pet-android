@@ -1,5 +1,6 @@
 package edu.gatech.virtual_pet_app.database;
 
+import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,19 +51,10 @@ public class PDSource
 		
 		return 0;
 	}
-	public void removePet(Pet pet)
-	{
-		long id = pet.getId();
-		database.delete(VPDHelper.TABLE_PET, VPDHelper.PET_ID + "=" + id, null);
-	}
-	
-	public void insertFeedInteraction(int post)
+
+	public void givePetItem(Pet pet, Item item)
 	{
 	//	db.execSQL("INSERT INTO Interaction VALUES("");
-	}
-	public void insertPlayInteraction(int post)
-	{
-		//insert interaction
 	}
 	public void pushPet(Pet pet)
 	{
@@ -92,23 +84,32 @@ public class PDSource
 		
 		Cursor cursor = database.query(VPDHelper.TABLE_OWNED, ownedCollumns, null, null, null, null, null);
 		Cursor c2;
-		cursor.moveToFirst();
-		while(!cursor.isAfterLast())
+
+		//	cursor.moveToFirst();
+		if(cursor.moveToFirst())
 		{
-			Item item = new Item();
-			item.setItem_id(cursor.getInt(1));
-			item.setQuantity(cursor.getInt(2));
-			c2 = database.query(VPDHelper.TABLE_ITEM, null, VPDHelper.ITEM_ID + "=" + item.getItem_id(), null, null, null, null, null);
-			item.setPrice(cursor.getInt(1));
-			item.setDescription(cursor.getString(2));
-			item.setType(Item.Type.valueOf(cursor.getString(3)));
-			item.setImpact(cursor.getInt(4));
-			item.setIllnessImpact(cursor.getString(5));
-			items.add(item);
-			cursor.moveToNext();
+			while(!cursor.isAfterLast())
+			{
+				Item item = new Item();
+				item.setItem_id(cursor.getInt(1));
+				item.setQuantity(cursor.getInt(2));
+				c2 = database.query(VPDHelper.TABLE_ITEM, null, VPDHelper.ITEM_ID + "=" + item.getItem_id(), null, null, null, null, null);
+				if(c2.moveToFirst() == false)
+				{
+					return null;
+				}
+				item.setPrice(cursor.getInt(1));
+				item.setDescription(cursor.getString(2));
+				item.setType(Item.Type.valueOf(cursor.getString(3)));
+				item.setImpact(cursor.getInt(4));
+				item.setIllnessImpact(cursor.getString(5));
+				items.add(item);
+				cursor.moveToNext();
+			}
+			
+			return items;
 		}
-		
-		return items;
+		return null;
 	}
 	public List<Item> getItems()
 	{
@@ -116,39 +117,56 @@ public class PDSource
 		
 		Cursor cursor = database.query(VPDHelper.TABLE_ITEM, itemCollumns, null, null, null, null, null);
 		
-		cursor.moveToFirst();
-		while(!cursor.isAfterLast())
+		//	cursor.moveToFirst();
+		if(cursor.moveToFirst())
 		{
-			Item item = new Item();
-			item.setItem_id(cursor.getInt(0));
-			item.setPrice(cursor.getInt(1));
-			item.setDescription(cursor.getString(2));
-			item.setType(Item.Type.valueOf(cursor.getString(3)));
-			item.setImpact(cursor.getInt(4));
-			item.setIllnessImpact(cursor.getString(5));
-			items.add(item);
-			cursor.moveToNext();
-		}
+			while(!cursor.isAfterLast())
+			{
+				Item item = new Item();
+				item.setItem_id(cursor.getInt(0));
+				item.setPrice(cursor.getInt(1));
+				item.setDescription(cursor.getString(2));
+				item.setType(Item.Type.valueOf(cursor.getString(3)));
+				item.setImpact(cursor.getInt(4));
+				item.setIllnessImpact(cursor.getString(5));
+				items.add(item);
+				cursor.moveToNext();
+			}
 		
-		return items;
-	
+			return items;
+		}
+		return null;	
 	}
 
-	public void getRandomEvents()
+	public EventHandler makeEventHandler()
 	{
 		List<REvent> events = new ArrayList<REvent>();
+		List<Interactions> inters = new ArrayList<REvent>();
 		EventHandler handler;
 		Cursor cursor = database.query(VPDHelper.TABLE_ITEM, itemCollumns, null, null, null, null, null);
-		
-		cursor.moveToFirst();
-		while(!cursor.isAfterLast())
-		{
-			REvent event = new REvent(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5));
-			events.add(event);
-			cursor.moveToNext();
-		}
-		handler = new EventHandler(events);
-		return ;
+		Cursor c2 = database.query(VPDHelper.TABLE_INTERACTION, interactionCollumns, null, null, null, null, null);
+		//	cursor.moveToFirst();
+		if(cursor.moveToFirst() && c2.moveToFirst())
+		{		
+			while(!cursor.isAfterLast())
+			{
+				REvent event = new REvent(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5));
+				events.add(event);
+				cursor.moveToNext();
+			}
+			
+			while(!cursor.isAfterLast())
+			{
+				Interaction inter = new Interaction(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),cursor.getInt(3), cursor.getInt(4));
+				inters.add(inter);
+				c2.addToNext();
+			}
+			
+			handler = new EventHandler(events, inters);
+			return handler;
+		}	
+					
+		return null;
 	
 	}
 	
@@ -158,19 +176,22 @@ public class PDSource
 		
 		Cursor cursor = database.query(VPDHelper.TABLE_JOB, jobCollumns, null, null, null, null, null);
 		
-		cursor.moveToFirst();
-		while(!cursor.isAfterLast())
+	//	cursor.moveToFirst();
+		if(cursor.moveToFirst())
 		{
-			Job job = new Job();
-			job.setJob_id(cursor.getInt(0));
-			job.setPrice(cursor.getInt(1));
-			job.setDescription(cursor.getString(3));
-			jobs.add(job);
-			cursor.moveToNext();
+			while(!cursor.isAfterLast())
+			{
+				Job job = new Job();
+				job.setJob_id(cursor.getInt(0));
+				job.setPrice(cursor.getInt(1));
+				job.setDescription(cursor.getString(3));
+				jobs.add(job);
+				cursor.moveToNext();
+			}
+			return jobs;
 		}
 		
-		return jobs;
-		
+		return null;		
 	}
 	
 }
